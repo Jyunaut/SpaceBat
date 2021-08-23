@@ -152,7 +152,13 @@ namespace Player
         public override void EnterState()
         {
             Controller.Animator.Play(AnimationName, 0, 0f);
+            Controller.SetSpeedMultiplier(0.75f);
             StartCharge();
+        }
+
+        public override void ExitState()
+        {
+            Controller.ResetSpeedMultiplier();
         }
 
         private void StartCharge()

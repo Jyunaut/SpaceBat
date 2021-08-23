@@ -261,9 +261,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 504627307658277923, guid: cc3c304772e6de141833225a5d110973, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575020423539615206, guid: cc3c304772e6de141833225a5d110973, type: 3}
+      propertyPath: _moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2575020423539615206, guid: cc3c304772e6de141833225a5d110973, type: 3}
       propertyPath: <MovementSpeed>k__BackingField
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575020423539615206, guid: cc3c304772e6de141833225a5d110973, type: 3}
+      propertyPath: <HittableLayers>k__BackingField.m_Bits
+      value: 384
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc3c304772e6de141833225a5d110973, type: 3}
