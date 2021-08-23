@@ -12,7 +12,7 @@ public abstract class Actor : MonoBehaviour
     public Animator Animator { get; private set; }
     public Rigidbody2D Rigidbody2D { get; private set; }
     public BoxCollider2D BoxCollider2D { get; private set; }
-    public Dictionary<string, AnimationClip> Animations { get; set; }
+    public Dictionary<string, AnimationClip> Animations { get; set; } = new Dictionary<string, AnimationClip>();
 
     protected virtual void Awake()
     {
@@ -20,10 +20,8 @@ public abstract class Actor : MonoBehaviour
         Animator = GetComponent<Animator>();
         Rigidbody2D = GetComponent<Rigidbody2D>();
         BoxCollider2D = GetComponent<BoxCollider2D>();
-    }
-
-    protected virtual void Start()
-    {
-
+        if (Animator.runtimeAnimatorController.animationClips.Length > 0)
+            foreach (AnimationClip clip in Animator.runtimeAnimatorController.animationClips)
+                Animations.Add(clip.name, clip);
     }
 }
