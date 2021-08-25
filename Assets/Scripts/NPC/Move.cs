@@ -7,6 +7,6 @@ namespace NPC
     [CreateAssetMenu(fileName = "Move", menuName = "NPC/Move")]
     public class Move : ScriptableObject
     {
-        public string a ="Hello World";
-    }
+        public float duration;
+    }   
 }
