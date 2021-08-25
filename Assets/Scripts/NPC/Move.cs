@@ -8,5 +8,6 @@ namespace NPC
     public class Move : ScriptableObject
     {
         public float duration;
+        public GameObject[] spawns;
     }   
 }

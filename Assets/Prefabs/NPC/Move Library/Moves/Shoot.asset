@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Shoot
   m_EditorClassIdentifier: 
   duration: 5
+  spawns:
+  - {fileID: 8073880385855633426, guid: 7a6873ae39b5087499f4e73293dbf9c5, type: 3}
