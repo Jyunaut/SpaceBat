@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6008547221413432447}
   - component: {fileID: 1919770224982664155}
   - component: {fileID: 6952623843428120328}
-  - component: {fileID: 3876061007204945386}
+  - component: {fileID: 1838541124908907602}
   - component: {fileID: 2575020423539615206}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -1230193462654552949, guid: 121f2687f0c5c5c46a0b40958f91b31b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,8 +127,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &3876061007204945386
-BoxCollider2D:
+--- !u!58 &1838541124908907602
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -141,18 +141,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.15
 --- !u!114 &2575020423539615206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,3 +155,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f620ad3fa346549a42cd4632c0a0fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <HittableLayers>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 384
+  _moveSpeed: 3
+  _attackList:
+  - {fileID: 11400000, guid: f425c680002bae646ab46f04f120bcbe, type: 2}
+  - {fileID: 11400000, guid: 2077e1bdb06b9064d8c8dc80552abe13, type: 2}
+  - {fileID: 11400000, guid: 5dec5d97af6722a40a5b4c715b08bf19, type: 2}
+  - {fileID: 11400000, guid: 52d14ac17b404794b8e10974b377c9ae, type: 2}
+  - {fileID: 11400000, guid: 99c0b82c42d52974ea46c7e84b77f1b5, type: 2}
+  - {fileID: 11400000, guid: c480981469c9aaa4ea79d9da514daa3f, type: 2}

@@ -69,8 +69,8 @@ public class EffectsManager : MonoBehaviour
             float time = 0;
             while (time < duration)
             {
-                float x = xMagnitude * Mathf.Exp(-damping * time) * Mathf.Sin(frequency * time + (shakeInOneAxis ? Mathf.PI * time / duration : 0f));
-                float y = yMagnitude * Mathf.Exp(-damping * time) * Mathf.Sin(frequency * time - (shakeInOneAxis ? Mathf.PI * time / duration : 0f));
+                float x = xMagnitude * Mathf.Exp(-damping * time) * Mathf.Sin(frequency * time + (shakeInOneAxis ? 0f : Mathf.PI * time / duration));
+                float y = yMagnitude * Mathf.Exp(-damping * time) * Mathf.Sin(frequency * time - (shakeInOneAxis ? 0f : Mathf.PI * time / duration));
                 _camera.transform.localPosition = new Vector3(x, y, 0);
                 time += Time.unscaledDeltaTime;
                 yield return null;
@@ -92,8 +92,8 @@ public class EffectsManager : MonoBehaviour
             float time = 0;
             while (time < data.duration)
             {
-                float x = data.magnitude.x * Mathf.Exp(-data.damping * time) * Mathf.Sin(data.frequency * time + (data.shakeInOneAxis ? Mathf.PI * time / data.duration : 0f));
-                float y = data.magnitude.y * Mathf.Exp(-data.damping * time) * Mathf.Sin(data.frequency * time - (data.shakeInOneAxis ? Mathf.PI * time / data.duration : 0f));
+                float x = data.magnitude.x * Mathf.Exp(-data.damping * time) * Mathf.Sin(data.frequency * time + (data.shakeInOneAxis ? 0f : Mathf.PI * time / data.duration));
+                float y = data.magnitude.y * Mathf.Exp(-data.damping * time) * Mathf.Sin(data.frequency * time - (data.shakeInOneAxis ? 0f : Mathf.PI * time / data.duration));
                 _camera.transform.localPosition = new Vector3(x, y, 0);
                 time += Time.unscaledDeltaTime;
                 yield return null;
@@ -134,7 +134,7 @@ public class EffectsManager : MonoBehaviour
         {
             Time.timeScale = 1f - data.scale;
             if (smoothSlow) Time.fixedDeltaTime = 0.02F * Time.timeScale;
-            yield return new WaitForSecondsRealtime(data.scale);
+            yield return new WaitForSecondsRealtime(data.duration);
             Time.timeScale = 1f;
             if (smoothSlow) Time.fixedDeltaTime = 0.02F * Time.timeScale;
         }

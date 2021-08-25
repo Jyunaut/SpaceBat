@@ -18,6 +18,15 @@ namespace Player
         public void ResetSpeedMultiplier() => _speedMultiplier = 1f;
 
         public State State { get; private set; }
+        [SerializeField] private List<AttackData> _attackList;
+        public Dictionary<string, AttackData> AttackDictionary { get; private set; } = new Dictionary<string, AttackData>();
+
+        protected override void Awake()
+        {
+            base.Awake();
+            foreach (AttackData data in _attackList)
+                AttackDictionary.Add(data.name, data);
+        }
 
         private void Start()
         {
@@ -34,6 +43,7 @@ namespace Player
         {
             State.FixedUpdate();
             MovementUpdate();
+            CheckInBounds();
         }
 
         public void SetState(State state)
@@ -47,6 +57,21 @@ namespace Player
         {
             if (!State.CanMove) return;
             Rigidbody2D.velocity = MoveSpeed * new Vector2(Inputs.Horizontal, Inputs.Vertical).normalized;
+        }
+
+        private void CheckInBounds()
+        {
+            Vector2 cameraOrigin = Camera.main.transform.position;
+            Vector2 cameraExtents = new Vector2(Camera.main.orthographicSize * Screen.width / Screen.height,
+                                                Camera.main.orthographicSize * Screen.height / Screen.width);
+            if (transform.position.x > cameraOrigin.x + cameraExtents.x)
+                transform.position = new Vector2(cameraOrigin.x + cameraExtents.x, transform.position.y);
+            if (transform.position.x < cameraOrigin.x - cameraExtents.x)
+                transform.position = new Vector2(cameraOrigin.x - cameraExtents.x, transform.position.y);
+            if (transform.position.y > cameraOrigin.y + cameraExtents.y)
+                transform.position = new Vector2(transform.position.x, cameraOrigin.y + cameraExtents.y);
+            if (transform.position.y < cameraOrigin.y-+ cameraExtents.y)
+                transform.position = new Vector2(transform.position.x, cameraOrigin.y - cameraExtents.y);
         }
     }
 }
