@@ -9,6 +9,7 @@ public class SceneController : MonoBehaviour
     public static SceneController Instance { get; private set; }
 
     [SerializeField] private Image _transitionScreen;
+    [SerializeField] private float _transitionTime;
 
     private void Awake()
     {
@@ -31,8 +32,7 @@ public class SceneController : MonoBehaviour
     {
         _transitionScreen.gameObject.SetActive(true);
 
-        const float duration = 0.5f;
-        for (float i = 0; i < 1; i += Time.deltaTime / duration)
+        for (float i = 0; i < 1; i += Time.deltaTime / _transitionTime)
         {
             _transitionScreen.color = new Color(0, 0, 0, Mathf.Lerp(0, 1, i));
             yield return null;
@@ -42,7 +42,7 @@ public class SceneController : MonoBehaviour
 
         while (!ao.isDone) yield return null;
 
-        for (float i = 0; i < 1; i += Time.deltaTime / duration)
+        for (float i = 0; i < 1; i += Time.deltaTime / _transitionTime)
         {
             _transitionScreen.color = new Color(0, 0, 0, Mathf.Lerp(1, 0, i));
             yield return null;
