@@ -63,14 +63,16 @@ namespace Player
         {
             Vector2 cameraOrigin = Camera.main.transform.position;
             Vector2 cameraExtents = new Vector2(Camera.main.orthographicSize * Screen.width / Screen.height,
-                                                Camera.main.orthographicSize * Screen.height / Screen.width);
+                                                Camera.main.orthographicSize * Screen.width / Screen.height);
+            // Vector2 cameraExtents = new Vector2(Camera.main.orthographicSize * Screen.width / Screen.height,
+            //                                     Camera.main.orthographicSize * Screen.height / Screen.width);
             if (transform.position.x > cameraOrigin.x + cameraExtents.x)
                 transform.position = new Vector2(cameraOrigin.x + cameraExtents.x, transform.position.y);
             if (transform.position.x < cameraOrigin.x - cameraExtents.x)
                 transform.position = new Vector2(cameraOrigin.x - cameraExtents.x, transform.position.y);
             if (transform.position.y > cameraOrigin.y + cameraExtents.y)
                 transform.position = new Vector2(transform.position.x, cameraOrigin.y + cameraExtents.y);
-            if (transform.position.y < cameraOrigin.y-+ cameraExtents.y)
+            if (transform.position.y < cameraOrigin.y - cameraExtents.y)
                 transform.position = new Vector2(transform.position.x, cameraOrigin.y - cameraExtents.y);
         }
     }

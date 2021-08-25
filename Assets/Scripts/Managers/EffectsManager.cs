@@ -23,14 +23,17 @@ public class EffectsManager : MonoBehaviour
 
     public static EffectsManager Instance { get; private set; }
 
-    [SerializeField] Camera _camera;
+    private Camera _camera;
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
             Destroy(gameObject);
         else
+        {
             Instance = this;
+            _camera = Camera.main;
+        }
     }
 
     public void SpawnEffect(GameObject effect, Vector2 position, Collider2D targetCol)

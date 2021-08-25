@@ -63,16 +63,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1583431172351513420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12d5b1d656c5d4c478bc26e2e0dcf915, type: 3}
+  m_Script: {fileID: 11500000, guid: b17343247bbf84d4da07033730bcabb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fffads:
-  - _objectsToSpawn: {fileID: 0}
-    position: {x: 0, y: 0}
-    moveWithLevel: 0
-  - _objectsToSpawn: {fileID: 0}
-    position: {x: 0, y: 0}
-    moveWithLevel: 0
-  - _objectsToSpawn: {fileID: 0}
-    position: {x: 0, y: 0}
-    moveWithLevel: 0
