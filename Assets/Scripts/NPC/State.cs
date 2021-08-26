@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Reflection;
-
+using MoveLibrary;
 namespace NPC
 {
     public class State : StateMachine
@@ -29,29 +29,68 @@ namespace NPC
 
         public void Wait() => Controller.SetState(new Wait(Controller));
         public void Shoot() => Controller.SetState(new Shoot(Controller));
+        public void Jaunt() => Controller.SetState(new Jaunt(Controller));
 
     }
     class Wait : State
     {
         private Coroutine coroutine;
+        private MoveLibrary.Wait wait;
 
-        public Wait(Controller controller) : base(controller) { }
+        public Wait(Controller controller) : base(controller)
+        {
+            wait = (MoveLibrary.Wait)Controller.currentMove;
+        }
 
         public override void EnterState()
         {
-            Duration(5f, ref coroutine);
+            Duration(wait.duration, ref coroutine);
         }
     }
     class Shoot : State
     {
         private Coroutine coroutine;
+        private MoveLibrary.Shoot shoot;
 
-        public Shoot(Controller controller) : base(controller) { }
+        public Shoot(Controller controller) : base(controller)
+        {
+            shoot = (MoveLibrary.Shoot)Controller.currentMove;
+        }
 
         public override void EnterState()
         {
-            GameObject.Instantiate(Controller.currentMove.spawns[0], Controller.transform.position, Quaternion.identity);
-            Duration(5f, ref coroutine);
+            GameObject.Instantiate(shoot.bullet, Controller.transform.position, Quaternion.identity);
+            Duration(Controller.currentMove.duration, ref coroutine);
+        }
+    }
+    class Jaunt : State
+    {
+        private Coroutine coroutine;
+        private MoveLibrary.Jaunt jaunt;
+        private PathfindingHandler pathHandler;
+
+        public Jaunt(Controller controller) : base(controller)
+        {
+            jaunt = (MoveLibrary.Jaunt)Controller.currentMove;
+            pathHandler = Controller.GetComponent<PathfindingHandler>();
+            pathHandler.speed = jaunt.speed;
+            pathHandler.isReached = false;
+            Debug.Log("Jaunt Triggered");
+        }
+
+        public override void EnterState()
+        {
+            pathHandler.SetTarget(jaunt.target);
+            Duration(jaunt.duration, ref coroutine);
+        }
+
+        public override void Update()
+        {
+            if (pathHandler.isReached)
+            {
+                pathHandler.isReached = false;
+                Controller.TriggeredOnMoveComplete();
+            }
         }
     }
 }
