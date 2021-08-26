@@ -12,9 +12,15 @@ namespace NPC
         public event EventHandler<OnMoveCompleteEventArgs> OnMoveComplete;
         public class OnMoveCompleteEventArgs : EventArgs { public Move nextMove { get; set; } }
 
-        public Phase phase;
+        public event EventHandler<OnPhaseCompleteEventArgs> OnPhaseComplete;
+        public class OnPhaseCompleteEventArgs : EventArgs { public Phase nextPhase { get; set; } }
+
+        public List<Phase> phases;
+
+        public Phase currentPhase;
         public Move currentMove;
         public int movesTraversed;
+        public int phasesTraversed;
         public State state { get; set; }
 
         protected override void Awake()
@@ -25,11 +31,17 @@ namespace NPC
 
         private void Start()
         {
+            OnPhaseComplete += (object sender, OnPhaseCompleteEventArgs eventArgs) =>
+            {
+               if(eventArgs.nextPhase != null) TriggerPhase(eventArgs.nextPhase);
+            };
+            OnPhaseComplete(this, new OnPhaseCompleteEventArgs { nextPhase = currentPhase = phases[phasesTraversed = 0] });
+
             OnMoveComplete += (object sender, OnMoveCompleteEventArgs eventArgs) =>
             {
                if(eventArgs.nextMove != null) TriggerMove(eventArgs.nextMove);
             };
-            OnMoveComplete(this, new OnMoveCompleteEventArgs { nextMove = currentMove = phase.moves[movesTraversed = 0] });
+            OnMoveComplete(this, new OnMoveCompleteEventArgs { nextMove = currentMove = currentPhase.moves[movesTraversed = 0] });
         }
         
         private void Update()
@@ -44,14 +56,28 @@ namespace NPC
 
         public void TriggeredOnMoveComplete()
         {
-            if(++movesTraversed != phase.moves.Length)
+            // if(!currentMove.looping) currentPhase.moves.RemoveAt(movesTraversed);
+            if(++movesTraversed < currentPhase.moves.Count)
             {
-                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = currentMove = phase.moves[movesTraversed]});
+                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = currentMove = currentPhase.moves[movesTraversed]});
             }
             else
             {
-                Debug.Log("Looping phase");
-                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = currentMove = phase.moves[movesTraversed = 0]});
+                TriggeredOnPhaseComplete();
+            }
+        }
+
+        public void TriggeredOnPhaseComplete()
+        {
+            if(++phasesTraversed < phases.Count)
+            {
+                movesTraversed = 0;
+                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = currentPhase = phases[phasesTraversed]});
+            }
+            else
+            {
+                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = currentPhase = phases[phasesTraversed = 0]});
+                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = currentMove = currentPhase.moves[movesTraversed = 0]});
             }
         }
 
@@ -60,6 +86,11 @@ namespace NPC
             this.state?.ExitState();
             this.state = state;
             this.state.EnterState();
+        }
+
+        protected void TriggerPhase(Phase phase)
+        {
+            currentPhase = phase;
         }
 
         protected void TriggerMove(Move move)

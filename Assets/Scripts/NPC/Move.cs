@@ -6,5 +6,15 @@ public abstract class Move : ScriptableObject
 {
     public float duration;
     public bool looping;
-    public int uses { get; set; } // TODO add condition so that uses can be initialized if NOT looping
+    public int uses
+    {
+        get { return uses; }
+        set
+        {
+            if (looping == false)
+                uses = value;
+            else
+                Debug.Log($"Cannot assign uses while looping is {looping}");
+        }
+    }
 }

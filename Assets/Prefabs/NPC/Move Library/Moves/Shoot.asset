@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eb03affeb9d628448ca10f1ba172a90, type: 3}
   m_Name: Shoot
   m_EditorClassIdentifier: 
-  duration: 0
-  bullet: {fileID: 0}
+  duration: 1
+  looping: 1
+  bullet: {fileID: 8073880385855633426, guid: 7a6873ae39b5087499f4e73293dbf9c5, type: 3}
