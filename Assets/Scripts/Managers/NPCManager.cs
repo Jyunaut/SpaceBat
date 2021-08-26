@@ -8,7 +8,6 @@ public class NPCManager : MonoBehaviour
 
     public float cellSize;
     public Rect levelRect;
-    public GameObject player;
     public Pathfinding pathfinding;
 
     public void Awake()
@@ -25,10 +24,5 @@ public class NPCManager : MonoBehaviour
     private void Update()
     {
         pathfinding.DebugPathNodeType();
-    }
-
-    public int a(int b = 0)
-    {
-        return b;
     }
 }
