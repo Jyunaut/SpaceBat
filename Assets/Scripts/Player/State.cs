@@ -7,17 +7,9 @@ namespace Player
 {
     public class State : StateMachine
     {
-        public interface IDoesDamage
-        {
-            int Damage { get; set; }
-            Vector2 HitBoxOrigin { get; set; }
-            Vector2 HitBoxSize { get; set; }
-            void CastHitCollider();
-        }
-
         public bool IsDoingAction { get => actionCoroutine != null; }
-        public bool CanMove { get; set; } = true;
-        public bool CanAttack { get; set; } = true;
+        public static bool CanMove { get; set; } = true;
+        public static bool CanAttack { get; set; } = true;
 
         protected static Collider2D[] hits = new Collider2D[20];
         protected static Coroutine actionCoroutine;
@@ -73,28 +65,30 @@ namespace Player
             }
         }
     }
-    abstract class Attack : Action, State.IDoesDamage
+    abstract class Attack : Action
     {
-        public delegate void HitTarget(IDamageable target);
+        public delegate void HitTarget(Actor target);
         public event HitTarget OnHitTarget;
 
-        public int HitFrame { get; set; }
-        public int Damage { get; set; }
-        public Vector2 HitBoxOrigin { get; set; }
-        public Vector2 HitBoxSize { get; set; }
+        protected AttackData attackData;
 
-        public Attack(Controller controller, int hitFrame, int damage, Vector2 hitBoxOrigin, Vector2 hitBoxSize, string animationName = "") : base(controller, animationName)
+        public Attack(Controller controller) : base(controller)
         {
-            HitFrame = hitFrame;
-            Damage = damage;
-            HitBoxOrigin = (Vector2)Controller.transform.position + hitBoxOrigin;
-            HitBoxSize = hitBoxSize;
+            attackData = Controller.AttackDictionary[GetType().Name];
+            AnimationName = attackData.animation.name;
         }
 
         public override void EnterState()
         {
             base.EnterState();
             StartAttack();
+            OnHitTarget += HitInteraction;
+        }
+
+        public override void ExitState()
+        {
+            base.ExitState();
+            OnHitTarget -= HitInteraction;
         }
 
         private void StartAttack()
@@ -104,7 +98,7 @@ namespace Player
                 Controller.StopCoroutine(attackCoroutine);
                 attackCoroutine = null;
             }
-            attackCoroutine = Controller.StartCoroutine(DoAttackAfterDelay(HitFrame.ToSeconds(Controller.Animations[AnimationName].frameRate)));
+            attackCoroutine = Controller.StartCoroutine(DoAttackAfterDelay(attackData.hitFrame.ToSeconds(Controller.Animations[AnimationName].frameRate)));
 
             IEnumerator DoAttackAfterDelay(float delayTime)
             {
@@ -113,15 +107,17 @@ namespace Player
             }
         }
 
-        public void CastHitCollider()
+        private void CastHitCollider()
         {
-            int hitCount = Physics2D.OverlapBoxNonAlloc(HitBoxOrigin, HitBoxSize, 0f, hits, Controller.HittableLayers);
+            Vector2 origin = (Vector2)Controller.transform.position + attackData.hitBoxOrigin;
+            Vector2 size = attackData.hitBoxSize;
+            int hitCount = Physics2D.OverlapBoxNonAlloc(origin, size, 0f, hits, Controller.HittableLayers);
             Vector2[] points =
             {
-                new Vector2(HitBoxOrigin.x - HitBoxSize.x / 2f, HitBoxOrigin.y + HitBoxSize.y / 2f),
-                new Vector2(HitBoxOrigin.x + HitBoxSize.x / 2f, HitBoxOrigin.y + HitBoxSize.y / 2f),
-                new Vector2(HitBoxOrigin.x - HitBoxSize.x / 2f, HitBoxOrigin.y - HitBoxSize.y / 2f),
-                new Vector2(HitBoxOrigin.x + HitBoxSize.x / 2f, HitBoxOrigin.y - HitBoxSize.y / 2f)
+                new Vector2(origin.x - size.x / 2f, origin.y + size.y / 2f),
+                new Vector2(origin.x + size.x / 2f, origin.y + size.y / 2f),
+                new Vector2(origin.x - size.x / 2f, origin.y - size.y / 2f),
+                new Vector2(origin.x + size.x / 2f, origin.y - size.y / 2f)
             };
             Debug.DrawLine(points[0], points[1], Color.red, 1f); // top
             Debug.DrawLine(points[2], points[3], Color.red, 1f); // bottom
@@ -129,11 +125,17 @@ namespace Player
             Debug.DrawLine(points[1], points[3], Color.red, 1f); // right
             for (int i = 0; i < hitCount; i++)
             {
-                if (hits[i].TryGetComponent(out IDamageable target))
+                if (hits[i].TryGetComponent(out Actor target))
                 {
                     OnHitTarget?.Invoke(target);
                 }
             }
+        }
+
+        private void HitInteraction(Actor target)
+        {
+            EffectsManager.Instance.ScreenShake(attackData.screenShakeData);
+            EffectsManager.Instance.TimeSlow(attackData.timeSlowData);
         }
     }
     abstract class Charge : State
@@ -152,7 +154,13 @@ namespace Player
         public override void EnterState()
         {
             Controller.Animator.Play(AnimationName, 0, 0f);
+            Controller.SetSpeedMultiplier(0.75f);
             StartCharge();
+        }
+
+        public override void ExitState()
+        {
+            Controller.ResetSpeedMultiplier();
         }
 
         private void StartCharge()
@@ -223,13 +231,7 @@ namespace Player
     }
     class LightSwing1 : Attack
     {
-        public LightSwing1(Controller controller) : base(
-            controller,
-            hitFrame: 1,
-            damage: 1,
-            hitBoxOrigin: new Vector2(0f, 0.2f),
-            hitBoxSize: new Vector2(1f, 1f),
-            animationName: "player_lightswing1") {}
+        public LightSwing1(Controller controller) : base(controller) {}
 
         public override void Transitions()
         {
@@ -242,13 +244,7 @@ namespace Player
     }
     class HeavySwing1 : Attack
     {
-        public HeavySwing1(Controller controller) : base(
-            controller,
-            hitFrame: 1,
-            damage: 6,
-            hitBoxOrigin: new Vector2(0f, 0.2f),
-            hitBoxSize: new Vector2(1f, 1f),
-            animationName: "player_heavyswing1") {}
+        public HeavySwing1(Controller controller) : base(controller) {}
 
         public override void Transitions()
         {
@@ -273,13 +269,7 @@ namespace Player
     }
     class LightSwing2 : Attack
     {
-        public LightSwing2(Controller controller) : base(
-            controller,
-            hitFrame: 1,
-            damage: 2,
-            hitBoxOrigin: new Vector2(0f, 0.2f),
-            hitBoxSize: new Vector2(1f, 1f),
-            animationName: "player_lightswing2") {}
+        public LightSwing2(Controller controller) : base(controller) {}
 
         public override void Transitions()
         {
@@ -292,13 +282,7 @@ namespace Player
     }
     class HeavySwing2 : Attack
     {
-        public HeavySwing2(Controller controller) : base(
-            controller,
-            hitFrame: 1,
-            damage: 6,
-            new Vector2(0f, 0.2f),
-            hitBoxSize: new Vector2(1f, 1f),
-            animationName: "player_heavyswing2") {}
+        public HeavySwing2(Controller controller) : base(controller) {}
 
         public override void Transitions()
         {
@@ -323,22 +307,10 @@ namespace Player
     }
     class LightSwing3 : Attack
     {
-        public LightSwing3(Controller controller) : base(
-            controller,
-            hitFrame: 1,
-            damage: 3,
-            hitBoxOrigin: new Vector2(0f, 0.2f),
-            hitBoxSize: new Vector2(1f, 1f),
-            animationName: "player_lightswing3") {}
+        public LightSwing3(Controller controller) : base(controller) {}
     }
     class HeavySwing3 : Attack
     {
-        public HeavySwing3(Controller controller) : base(
-            controller,
-            hitFrame: 1,
-            damage: 6,
-            hitBoxOrigin: new Vector2(0f, 0.2f),
-            hitBoxSize: new Vector2(1f, 1f),
-            animationName: "player_heavyswing3") {}
+        public HeavySwing3(Controller controller) : base(controller) {}
     }
 }
