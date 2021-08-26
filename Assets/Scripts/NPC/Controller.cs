@@ -47,6 +47,7 @@ namespace NPC
         private void Update()
         {
             state?.Update();
+            state?.Transitions();
         }
 
         private void FixedUpdate()

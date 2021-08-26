@@ -25,7 +25,7 @@ public class PathfindingHandler : MonoBehaviour
         if (vectorPath != null)
         {
             Vector3 targetPosition = vectorPath[currentPathIndex];
-            if (Vector3.Distance(GetPosition(), targetPosition) > 0.5f)
+            if (Vector3.Distance(GetPosition(), targetPosition) > 0.1f)
             {
                 Vector3 moveDir = (targetPosition - GetPosition()).normalized;
                 transform.position += moveDir * speed * Time.deltaTime;
