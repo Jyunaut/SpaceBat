@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1670382481698827508}
   - component: {fileID: 1670382481698827507}
   m_Layer: 0
-  m_Name: NPCManager
+  m_Name: NPC Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
