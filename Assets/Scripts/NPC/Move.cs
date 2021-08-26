@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NPC
+public abstract class Move : ScriptableObject
 {
-    [CreateAssetMenu(fileName = "Move", menuName = "NPC/Move")]
-    public class Move : ScriptableObject
-    {
-        public float duration;
-        public GameObject[] spawns;
-    }   
+    public float duration;
+    public bool looping;
+    public int uses { get; set; } // TODO add condition so that uses can be initialized if NOT looping
 }
