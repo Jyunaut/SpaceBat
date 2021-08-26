@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Reflection;
+using MoveLibrary;
 
 namespace NPC
 {
     public class Controller : Actor
     {
         public event EventHandler<OnMoveCompleteEventArgs> OnMoveComplete;
-        public class OnMoveCompleteEventArgs : EventArgs
-        {
-            public Move nextMove { get; set; }
-        }
+        public class OnMoveCompleteEventArgs : EventArgs { public Move nextMove { get; set; } }
 
         public Phase phase;
         public Move currentMove;
@@ -25,13 +23,23 @@ namespace NPC
             state = new State(this);
         }
 
-        public void Start()
+        private void Start()
         {
             OnMoveComplete += (object sender, OnMoveCompleteEventArgs eventArgs) =>
             {
                if(eventArgs.nextMove != null) TriggerMove(eventArgs.nextMove);
             };
             OnMoveComplete(this, new OnMoveCompleteEventArgs { nextMove = currentMove = phase.moves[movesTraversed = 0] });
+        }
+        
+        private void Update()
+        {
+            state?.Update();
+        }
+
+        private void FixedUpdate()
+        {
+            state?.FixedUpdate();
         }
 
         public void TriggeredOnMoveComplete()
