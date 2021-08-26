@@ -15,12 +15,7 @@ public class PathfindingHandler : MonoBehaviour
         currentPathIndex = 0;
     }
 
-    private void Update()
-    {
-        HandleMovement();
-    }
-
-    private void HandleMovement()
+    public void HandleMovement()
     {
         if (vectorPath != null)
         {
