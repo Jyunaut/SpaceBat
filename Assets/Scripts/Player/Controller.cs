@@ -28,6 +28,18 @@ namespace Player
                 AttackDictionary.Add(data.name, data);
         }
 
+        private void OnEnable()
+        {
+            GlobalEvents.OnPlayerSpawn += EnableControls;
+            GlobalEvents.OnPlayerDead += DisableControls;
+        }
+
+        private void OnDisable()
+        {
+            GlobalEvents.OnPlayerSpawn -= EnableControls;
+            GlobalEvents.OnPlayerDead -= DisableControls;
+        }
+
         private void Start()
         {
             SetState(new Idle(this));
@@ -43,7 +55,6 @@ namespace Player
         {
             State.FixedUpdate();
             MovementUpdate();
-            CheckInBounds();
         }
 
         public void SetState(State state)
@@ -55,25 +66,18 @@ namespace Player
 
         private void MovementUpdate()
         {
-            if (!State.CanMove) return;
             Rigidbody2D.velocity = MoveSpeed * new Vector2(Inputs.Horizontal, Inputs.Vertical).normalized;
         }
 
-        private void CheckInBounds()
+        private void EnableControls()
         {
-            Vector2 cameraOrigin = Camera.main.transform.position;
-            Vector2 cameraExtents = new Vector2(Camera.main.orthographicSize * Screen.width / Screen.height,
-                                                Camera.main.orthographicSize * Screen.width / Screen.height);
-            // Vector2 cameraExtents = new Vector2(Camera.main.orthographicSize * Screen.width / Screen.height,
-            //                                     Camera.main.orthographicSize * Screen.height / Screen.width);
-            if (transform.position.x > cameraOrigin.x + cameraExtents.x)
-                transform.position = new Vector2(cameraOrigin.x + cameraExtents.x, transform.position.y);
-            if (transform.position.x < cameraOrigin.x - cameraExtents.x)
-                transform.position = new Vector2(cameraOrigin.x - cameraExtents.x, transform.position.y);
-            if (transform.position.y > cameraOrigin.y + cameraExtents.y)
-                transform.position = new Vector2(transform.position.x, cameraOrigin.y + cameraExtents.y);
-            if (transform.position.y < cameraOrigin.y - cameraExtents.y)
-                transform.position = new Vector2(transform.position.x, cameraOrigin.y - cameraExtents.y);
+            State.CanMove = true;
+            State.CanAttack = true;
+        }
+        private void DisableControls()
+        {
+            State.CanMove = false;
+            State.CanAttack = false;
         }
     }
 }

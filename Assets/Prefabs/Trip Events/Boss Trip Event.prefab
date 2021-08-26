@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1583431172351513417}
   - component: {fileID: 1583431172351513423}
-  - component: {fileID: 1583431172351513422}
+  - component: {fileID: -2251664179166779805}
   m_Layer: 0
-  m_Name: NPCTripEvent
+  m_Name: Boss Trip Event
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -48,13 +48,13 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -6.1404157, y: 0}
-  - {x: 7.268499, y: 0}
+  - {x: -14.54, y: 0}
+  - {x: 15.34, y: 0}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &1583431172351513422
+--- !u!114 &-2251664179166779805
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,6 +63,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1583431172351513420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b17343247bbf84d4da07033730bcabb6, type: 3}
+  m_Script: {fileID: 11500000, guid: 36060d9bfa7fcf844babb19518270ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tripObject: 1

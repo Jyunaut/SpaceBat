@@ -8,8 +8,8 @@ namespace Player
     public class State : StateMachine
     {
         public bool IsDoingAction { get => actionCoroutine != null; }
-        public bool CanMove { get; set; } = true;
-        public bool CanAttack { get; set; } = true;
+        public static bool CanMove { get; set; } = true;
+        public static bool CanAttack { get; set; } = true;
 
         protected static Collider2D[] hits = new Collider2D[20];
         protected static Coroutine actionCoroutine;

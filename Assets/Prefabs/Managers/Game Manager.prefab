@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _map: {fileID: 0}
-  _scrollSpeed: 0
+  _scrollSpeed: 0.5

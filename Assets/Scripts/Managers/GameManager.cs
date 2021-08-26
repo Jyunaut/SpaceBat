@@ -28,9 +28,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(ScrollMap());
+        _scrollMap = StartCoroutine(ScrollMap());
     }
 
+    private Coroutine _scrollMap;
     private IEnumerator ScrollMap()
     {
         if (_map == null) yield break;
@@ -40,5 +41,5 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
     }
-    private void StopScrollingMap() => StopCoroutine(ScrollMap());
+    private void StopScrollingMap() => StopCoroutine(_scrollMap);
 }

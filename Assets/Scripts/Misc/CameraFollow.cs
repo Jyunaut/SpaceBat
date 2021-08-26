@@ -20,4 +20,14 @@ public class CameraFollow : MonoBehaviour
                 transform.position = Vector3.Lerp((Vector2)transform.position, new Vector3(_followTarget.position.x + _deadzone.x, transform.position.y) + _offset, _smoothing);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        Vector2 cameraOrigin = Camera.main.transform.position;
+        Vector2 cameraExtents = new Vector2(Camera.main.orthographicSize * Screen.width / Screen.height,
+                                            Camera.main.orthographicSize * Screen.width / Screen.height);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(cameraOrigin + new Vector2(cameraExtents.x, cameraExtents.y), cameraOrigin + new Vector2(cameraExtents.x, cameraExtents.y + 40f));
+        Gizmos.DrawLine(cameraOrigin + new Vector2(-cameraExtents.x, cameraExtents.y), cameraOrigin + new Vector2(-cameraExtents.x, cameraExtents.y + 40f));
+    }
 }
