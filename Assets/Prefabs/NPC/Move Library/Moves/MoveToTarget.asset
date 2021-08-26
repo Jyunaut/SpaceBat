@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2715f1c947bd0d6418c8e37805f965ed, type: 3}
   m_Name: MoveToTarget
   m_EditorClassIdentifier: 
-  duration: 0
+  duration: 3
   looping: 0
-  target: {fileID: 0}
-  speed: 0
+  animation: {fileID: 0}
+  speed: 3

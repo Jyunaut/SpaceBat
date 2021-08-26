@@ -27,6 +27,7 @@ public abstract class Actor : MonoBehaviour
         }
     }
     public bool IsAlive => Health > 0;
+    public bool IsStaggered { get; private set; }
 
     public SpriteRenderer SpriteRenderer { get; private set; }
     public Animator Animator { get; private set; }
@@ -51,5 +52,23 @@ public abstract class Actor : MonoBehaviour
     public virtual void TakeDamage(int amount)
     {
         Health -= Mathf.Clamp(amount, 0, MaxHealth);
+    }
+
+    private Coroutine _knockbackCoroutine;
+    public virtual void SetStagger(float duration)
+    {
+        if (_knockbackCoroutine != null)
+        {
+            StopCoroutine(_knockbackCoroutine);
+            _knockbackCoroutine = null;
+        }
+        _knockbackCoroutine = StartCoroutine(Delay(duration));
+
+        IEnumerator Delay(float duration)
+        {
+            IsStaggered = true;
+            yield return new WaitForSeconds(duration);
+            IsStaggered = false;
+        }
     }
 }

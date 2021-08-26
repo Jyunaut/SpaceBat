@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8a16d82bef11e4bb84045143207a7d, type: 3}
   m_Name: Kamikaze
   m_EditorClassIdentifier: 
-  moves: []
+  moves:
+  - {fileID: 11400000, guid: 9f8e02797297c81458d852fe16a18a4e, type: 2}
   looping: 0

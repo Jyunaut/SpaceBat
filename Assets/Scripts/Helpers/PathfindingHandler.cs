@@ -48,7 +48,7 @@ public class PathfindingHandler : MonoBehaviour
         }
     }
 
-    private void StopMoving()
+    public void StopMoving()
     {
         vectorPath = null;
     }
