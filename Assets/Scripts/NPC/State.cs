@@ -116,6 +116,8 @@ namespace NPC
         public override void Update()
         {
             pathHandler.SetTarget(player.transform.position);
+            if (!Controller.IsStaggered)
+                pathHandler.HandleMovement();
         }
 
         public override void Transitions()
@@ -125,7 +127,7 @@ namespace NPC
                 pathHandler.isReached = false;
                 Controller.TriggeredOnMoveComplete();
             }
-            else if (timer >= moveToTarget.animation.clip.length)
+            else if (moveToTarget.animation != null && timer >= moveToTarget.animation.clip.length)
                 Controller.TriggeredOnMoveComplete();
             timer += Time.deltaTime;
         }
