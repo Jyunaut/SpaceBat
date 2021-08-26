@@ -11,4 +11,3 @@ namespace MoveLibrary
         public float speed;
     }
 }
-

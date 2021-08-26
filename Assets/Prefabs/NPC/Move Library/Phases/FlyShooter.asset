@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlyShooter
   m_EditorClassIdentifier: 
   moves:
-  - {fileID: 11400000, guid: 45fd71ccbe56b954caf6fbd476453c15, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 9e9609d067cfb9e40bb6b709f8830fa9, type: 2}
   - {fileID: 11400000, guid: 9e9609d067cfb9e40bb6b709f8830fa9, type: 2}
   - {fileID: 11400000, guid: 9e9609d067cfb9e40bb6b709f8830fa9, type: 2}
