@@ -81,13 +81,13 @@ namespace NPC
         public override void EnterState()
         {
             pathHandler.SetTarget(jaunt.target);
-            Duration(jaunt.duration, ref coroutine);
         }
 
         public override void Update()
         {
             if (pathHandler.isReached)
             {
+                Debug.Log(Controller.state.ToString() + " Complete");
                 pathHandler.isReached = false;
                 Controller.TriggeredOnMoveComplete();
             }
