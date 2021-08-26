@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private Transform _map;
-    [SerializeField] private float _scrollSpeed;
+    [field: SerializeField] public float ScrollSpeed { get; private set; }
 
     private void Awake()
     {
@@ -37,9 +37,13 @@ public class GameManager : MonoBehaviour
         if (_map == null) yield break;
         while (true)
         {
-            _map.position = new Vector2(_map.position.x, _map.position.y - _scrollSpeed * Time.deltaTime);
+            _map.position = new Vector2(_map.position.x, _map.position.y - ScrollSpeed * Time.deltaTime);
             yield return null;
         }
     }
-    private void StopScrollingMap() => StopCoroutine(_scrollMap);
+    private void StopScrollingMap()
+    {
+        ScrollSpeed = 0f;
+        StopCoroutine(_scrollMap);
+    }
 }
