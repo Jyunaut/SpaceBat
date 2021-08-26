@@ -134,8 +134,16 @@ namespace Player
 
         private void HitInteraction(Actor target)
         {
+            Knockback(target, attackData.knockbackMagnitude);
             EffectsManager.Instance.ScreenShake(attackData.screenShakeData);
             EffectsManager.Instance.TimeSlow(attackData.timeSlowData);
+        }
+
+        private void Knockback(Actor target, Vector2 magnitude)
+        {
+            target.SetStagger(1f);
+            Debug.Log("Hello");
+            target.Rigidbody2D.velocity = new Vector2(magnitude.x * (target.transform.position - Controller.transform.position).normalized.x / 2f, magnitude.y);
         }
     }
     abstract class Charge : State

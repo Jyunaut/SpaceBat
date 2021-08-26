@@ -108,16 +108,22 @@ namespace NPC
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = moveToTarget.speed;
             player = GameObject.FindGameObjectWithTag(GlobalStrings.kPlayer);
-            pathHandler.SetTarget(player.transform.position);
             timer = 0;
             Debug.Log("Kamikaze");
         }
 
-        public override void Update()
+        public override void FixedUpdate()
         {
-            pathHandler.SetTarget(player.transform.position);
+            Debug.Log(Controller.IsStaggered);
             if (!Controller.IsStaggered)
+            {
+                pathHandler.SetTarget(player.transform.position);
                 pathHandler.HandleMovement();
+            }
+            else
+            {
+                pathHandler.StopMoving();
+            }
         }
 
         public override void Transitions()
@@ -130,6 +136,34 @@ namespace NPC
             else if (moveToTarget.animation != null && timer >= moveToTarget.animation.clip.length)
                 Controller.TriggeredOnMoveComplete();
             timer += Time.deltaTime;
+        }
+    }
+    class Explode : State
+    {
+        private MoveLibrary.Explode explode;
+
+        public Explode(Controller controller) : base(controller)
+        {
+            explode = (MoveLibrary.Explode)Controller.currentMove;
+        }
+
+        public override void EnterState()
+        {
+            if (Controller.Animator.runtimeAnimatorController != null)
+                Controller.Animator.Play("Charge");
+            Controller.StartCoroutine(DelayedExplosion());
+        }
+
+        private IEnumerator DelayedExplosion()
+        {
+            yield return new WaitForSeconds(explode.delay);
+            Collider2D hit = Physics2D.OverlapCircle(Controller.transform.position, explode.radius, LayerMask.GetMask(GlobalStrings.kPlayer));
+            if (hit != null && hit.TryGetComponent(out Actor target))
+            {
+                target.TakeDamage(explode.damage);
+            }
+            Controller.Instantiate(explode.explosion, Controller.transform.position, Quaternion.identity);
+            Controller.Destroy(Controller.gameObject);
         }
     }
 }

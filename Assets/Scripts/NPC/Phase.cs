@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MoveLibrary
 {
-    [CreateAssetMenu(fileName = "Phase", menuName = "NPC/Phase")]
+    [CreateAssetMenu(fileName = "Phase", menuName = "NPC Phase")]
     public class Phase : ScriptableObject
     {
         public List<Move> moves;

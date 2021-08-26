@@ -10,6 +10,7 @@ namespace Player
         public AnimationClip animation;
         public int hitFrame;
         public int damage;
+        public Vector2 knockbackMagnitude;
         public Vector2 hitBoxOrigin;
         public Vector2 hitBoxSize;
         public EffectsManager.ScreenShakeData screenShakeData;
