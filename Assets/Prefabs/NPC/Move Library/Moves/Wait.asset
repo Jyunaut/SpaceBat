@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7306b31cfe969e049a863455abf984a2, type: 3}
   m_Name: Wait
   m_EditorClassIdentifier: 
-  duration: 0
+  duration: 3
+  looping: 1

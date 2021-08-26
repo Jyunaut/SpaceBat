@@ -10,9 +10,6 @@ public class NPCManager : MonoBehaviour
     public Rect levelRect;
     public GameObject player;
     public Pathfinding pathfinding;
-    
-    // Debug tools
-    public PathfindingHandler enemyPath;
 
     public void Awake()
     {

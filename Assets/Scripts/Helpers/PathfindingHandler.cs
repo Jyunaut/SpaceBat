@@ -6,7 +6,7 @@ public class PathfindingHandler : MonoBehaviour
 {
     public int currentPathIndex;
     public float speed;
-    public bool isReached { get; set; } = false;
+    public bool isReached = false;
     public List<Vector3> vectorPath;
 
     private void Start()

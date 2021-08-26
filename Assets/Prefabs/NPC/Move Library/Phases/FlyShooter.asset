@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8a16d82bef11e4bb84045143207a7d, type: 3}
   m_Name: FlyShooter
   m_EditorClassIdentifier: 
-  moves: []
+  moves:
+  - {fileID: 11400000, guid: 45fd71ccbe56b954caf6fbd476453c15, type: 2}
+  - {fileID: 11400000, guid: 9e9609d067cfb9e40bb6b709f8830fa9, type: 2}
+  - {fileID: 11400000, guid: 9e9609d067cfb9e40bb6b709f8830fa9, type: 2}
+  - {fileID: 11400000, guid: 9e9609d067cfb9e40bb6b709f8830fa9, type: 2}
+  looping: 0
