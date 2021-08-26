@@ -277,6 +277,8 @@ public class PathNode
         float offset = 0.2f;
         Vector3 centerPosition = GetWorldPosition() + new Vector3(cellSize, cellSize) * .5f;
         Collider2D[] colliders = Physics2D.OverlapBoxAll(centerPosition, new Vector2(cellSize - offset, cellSize - offset), 0, LayerMask.GetMask(GlobalStrings.kObstacle));
+        if (colliders.Length > 0)
+        Debug.Log(colliders[0].gameObject.layer);
 
         if (colliders.Length > 0)
         {

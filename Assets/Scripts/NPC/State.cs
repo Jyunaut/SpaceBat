@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Reflection;
 using MoveLibrary;
+
 namespace NPC
 {
     public class State : StateMachine
@@ -30,6 +31,7 @@ namespace NPC
         public void Wait() => Controller.SetState(new Wait(Controller));
         public void Shoot() => Controller.SetState(new Shoot(Controller));
         public void Jaunt() => Controller.SetState(new Jaunt(Controller));
+        public void MoveToTarget() => Controller.SetState(new MoveToTarget(Controller));
 
     }
     class Wait : State
@@ -91,6 +93,41 @@ namespace NPC
                 pathHandler.isReached = false;
                 Controller.TriggeredOnMoveComplete();
             }
+        }
+    }
+    class MoveToTarget : State
+    {
+        private MoveLibrary.MoveToTarget moveToTarget;
+        private PathfindingHandler pathHandler;
+        private GameObject player;
+        private float timer;
+
+        public MoveToTarget(Controller controller) : base(controller)
+        {
+            moveToTarget = (MoveLibrary.MoveToTarget)Controller.currentMove;
+            pathHandler = Controller.GetComponent<PathfindingHandler>();
+            pathHandler.speed = moveToTarget.speed;
+            player = GameObject.FindGameObjectWithTag(GlobalStrings.kPlayer);
+            pathHandler.SetTarget(player.transform.position);
+            timer = 0;
+            Debug.Log("Kamikaze");
+        }
+
+        public override void Update()
+        {
+            pathHandler.SetTarget(player.transform.position);
+        }
+
+        public override void Transitions()
+        {
+            if (pathHandler.isReached)
+            {
+                pathHandler.isReached = false;
+                Controller.TriggeredOnMoveComplete();
+            }
+            else if (timer >= moveToTarget.animation.clip.length)
+                Controller.TriggeredOnMoveComplete();
+            timer += Time.deltaTime;
         }
     }
 }
