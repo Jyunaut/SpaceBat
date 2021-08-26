@@ -21,7 +21,6 @@ namespace NPC
         public Move currentMove;
         public int movesTraversed;
         public int phasesTraversed;
-        public bool isKnockbacked;
         public State state { get; set; }
 
         protected override void Awake()

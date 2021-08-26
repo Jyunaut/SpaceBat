@@ -116,7 +116,7 @@ namespace NPC
         public override void Update()
         {
             pathHandler.SetTarget(player.transform.position);
-            if (Controller.isKnockbacked)
+            if (!Controller.IsStaggered)
                 pathHandler.HandleMovement();
         }
 
