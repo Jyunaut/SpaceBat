@@ -32,6 +32,7 @@ namespace NPC
         public void Shoot() => Controller.SetState(new Shoot(Controller));
         public void Jaunt() => Controller.SetState(new Jaunt(Controller));
         public void MoveToTarget() => Controller.SetState(new MoveToTarget(Controller));
+        public void Runner() => Controller.SetState(new Runner(Controller));
 
     }
 }

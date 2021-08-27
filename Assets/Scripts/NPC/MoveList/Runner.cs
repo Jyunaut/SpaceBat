@@ -8,7 +8,6 @@ namespace NPC
     {
         private MoveLibrary.Runner runner;
         private PathfindingHandler pathHandler;
-        private Vector3 direction;
         private float timer = 0;
 
         public Runner(Controller controller) : base(controller)
@@ -16,19 +15,15 @@ namespace NPC
             runner = (MoveLibrary.Runner)Controller.currentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = runner.speed;
-            Debug.Log("Jaunt Triggered");
-        }
-
-        public override void EnterState()
-        {
+            pathHandler.SetTarget(GetTarget());
+            Debug.Log("Runner Triggered");
         }
 
         public override void Update()
         {
-            Debug.Log(Controller.IsStaggered);
+            Debug.Log(pathHandler.isReached);
             if(!Controller.IsStaggered)
             {
-                pathHandler.SetTarget(GetTarget());
                 pathHandler.HandleMovement();
             }
             else
@@ -41,8 +36,8 @@ namespace NPC
         {
             if (pathHandler.isReached)
             {
-                pathHandler.isReached = false;
-                Controller.TriggeredOnMoveComplete();
+                pathHandler.SetTarget(GetTarget());
+                // Controller.TriggeredOnMoveComplete();
             }
             // else if (moveToPlayer.animation != null && timer >= moveToPlayer.animation.clip.length)
             //     Controller.TriggeredOnMoveComplete();
@@ -51,7 +46,11 @@ namespace NPC
 
         private Vector3 GetTarget()
         {
-            return Vector3.zero;
+            Pathfinding.Instance.grid.GetXY(Controller.transform.position, out int x, out int y);
+            x = Mathf.Abs(x) + Mathf.Abs(runner.range) * (int)runner.direction.x;
+            y = Mathf.Abs(y) + Mathf.Abs(runner.range) * (int)runner.direction.y;
+
+            return Pathfinding.Instance.grid.GetWorldPosition(x, y); ;
         }
     }
 }
