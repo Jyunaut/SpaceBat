@@ -16,7 +16,7 @@ namespace NPC
             moveToPlayer = (MoveLibrary.MoveToPlayer)Controller.currentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = moveToPlayer.speed;
-            player = GameObject.FindGameObjectWithTag(GlobalStrings.kPlayer);
+            player = GameManager.Instance.player;
             timer = 0;
             Debug.Log("Kamikaze");
         }
