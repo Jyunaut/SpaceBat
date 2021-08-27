@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Transform _map;
     [field: SerializeField] public float ScrollSpeed { get; private set; }
+    public GameObject player { get; set; }
 
     private void Awake()
     {
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         else
             Instance = this;
+
+        player = GameObject.FindGameObjectWithTag(GlobalStrings.kPlayer);
+        Debug.Log(player);
     }
 
     private void OnEnable()
