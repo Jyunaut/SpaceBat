@@ -11,13 +11,13 @@ namespace NPC
 
         public Shoot(Controller controller) : base(controller)
         {
-            shoot = (MoveLibrary.Shoot)Controller.currentMove;
+            shoot = (MoveLibrary.Shoot)Controller.CurrentMove;
         }
 
         public override void EnterState()
         {
             GameObject.Instantiate(shoot.bullet, Controller.transform.position, Quaternion.identity);
-            Duration(Controller.currentMove.duration, ref coroutine);
+            Duration(Controller.CurrentMove.duration, ref coroutine);
         }
     }
 }

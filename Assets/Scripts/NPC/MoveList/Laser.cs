@@ -10,7 +10,7 @@ namespace NPC
 
         public Laser(Controller controller) : base(controller)
         {
-            laser = (MoveLibrary.Laser)Controller.currentMove;
+            laser = (MoveLibrary.Laser)Controller.CurrentMove;
         }
 
         public override void EnterState()

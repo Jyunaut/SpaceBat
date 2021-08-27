@@ -10,7 +10,7 @@ namespace NPC
 
         public Explode(Controller controller) : base(controller)
         {
-            explode = (MoveLibrary.Explode)Controller.currentMove;
+            explode = (MoveLibrary.Explode)Controller.CurrentMove;
         }
 
         public override void EnterState()

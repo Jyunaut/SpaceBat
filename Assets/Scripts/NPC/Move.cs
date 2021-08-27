@@ -6,7 +6,7 @@ public abstract class Move : ScriptableObject
 {
     public GameObject[] helperObj;
     public float duration;
-    public bool looping;
+    public bool looping = true;
     public bool background;
     public int uses
     {

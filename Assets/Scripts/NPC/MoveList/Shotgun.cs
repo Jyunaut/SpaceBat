@@ -10,7 +10,7 @@ namespace NPC
 
         public Shotgun(Controller controller) : base(controller)
         {
-            shotgun = (MoveLibrary.Shotgun)Controller.currentMove;
+            shotgun = (MoveLibrary.Shotgun)Controller.CurrentMove;
         }
 
         public override void EnterState()

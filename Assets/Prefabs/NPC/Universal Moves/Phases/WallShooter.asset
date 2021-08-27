@@ -15,3 +15,4 @@ MonoBehaviour:
   moves:
   - {fileID: 11400000, guid: 2050f4267724cef4185b5e51bf801d42, type: 2}
   - {fileID: 11400000, guid: 9e9609d067cfb9e40bb6b709f8830fa9, type: 2}
+  looping: 1
