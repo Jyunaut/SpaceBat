@@ -18,7 +18,6 @@ public class Pathfinding
 
     public List<PathNode> debugTraversedNodes;
     public bool DebugNodeType = true;
-    public string a = "lmao";
 
     public Pathfinding(int width, int height, Vector3 origin, float cellSize)
     {
@@ -78,13 +77,17 @@ public class Pathfinding
     {
         PathNode startNode = grid.GetGridObject(startX, startY);
         PathNode endNode = grid.GetGridObject(endX, endY);
+        
+        if(endNode == null) return null; // TODO: polish
 
         openList = new List<PathNode> { startNode };
         closedList = new List<PathNode>();
 
+        if(!endNode.IsWalkable())  
+            endNode = FindClosestEnd(endNode);
         while (openList.Count > 0)
         {
-            PathNode currentNode = GetLowestF();
+            PathNode currentNode = GetLowestF(openList);
             if (currentNode == endNode)
             {
                 // Path found
@@ -95,7 +98,7 @@ public class Pathfinding
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
-            foreach (PathNode adjacentNode in GetAdjacentNodes(currentNode))
+            foreach (PathNode adjacentNode in GetAdjacentWalkableNodes(currentNode))
             {
                 if (closedList.Contains(adjacentNode))
                     continue;
@@ -112,7 +115,6 @@ public class Pathfinding
                 }
             }
         }
-
         // No path found
         Debug.Log("There is no path");
         return null;
@@ -152,7 +154,7 @@ public class Pathfinding
         return path;
     }
 
-    private List<PathNode> GetAdjacentNodes(PathNode currentNode)
+    private List<PathNode> GetAdjacentWalkableNodes(PathNode currentNode)
     {
         List<PathNode> adjacentNodes = new List<PathNode>();
 
@@ -175,6 +177,64 @@ public class Pathfinding
         return adjacentNodes;
     }
 
+    // TODO in post: Polish this later. Another near identical code from above
+    #region Get closest end position if initial end is blocked
+    private List<PathNode> GetAdjacentNodes(PathNode currentNode)
+    {
+        List<PathNode> adjacentNodes = new List<PathNode>();
+
+        for (int x = currentNode.x - 1; x != currentNode.x + 2; x++)
+        {
+            for (int y = currentNode.y - 1; y != currentNode.y + 2; y++)
+            {
+                PathNode adjacentNode = grid.GetGridObject(x, y);
+                if (adjacentNode != null)
+                {
+                    adjacentNodes.Add(adjacentNode);
+
+                    if (!debugTraversedNodes.Contains(adjacentNode))
+                        debugTraversedNodes.Add(adjacentNode);
+                }
+            }
+        }
+        adjacentNodes.Remove(currentNode);
+
+        return adjacentNodes;
+    }
+
+    private PathNode FindClosestEnd(PathNode end)
+    {
+        PathNode start = end;
+        List<PathNode> openEnd = new List<PathNode> { start };
+        List<PathNode> closedEnd = new List<PathNode>();
+
+        while (openEnd.Count > 0)
+        {
+            PathNode currentNode = openEnd[0];
+            if (currentNode.IsWalkable())
+            {
+                return currentNode;
+            }
+            openEnd.Remove(currentNode);
+            closedEnd.Add(currentNode);
+
+            foreach (PathNode adjacentNode in GetAdjacentNodes(currentNode))
+            {
+                if (closedEnd.Contains(adjacentNode))
+                    continue;
+
+                if (!openEnd.Contains(adjacentNode))
+                {
+                    openEnd.Add(adjacentNode);
+                }
+            }
+        }
+        // No path found
+        Debug.Log("There is no path");
+        return null;
+    }
+    #endregion
+
     private void ScoreNode(PathNode node, PathNode origin, PathNode target)
     {
         node.gScore = CalculateDistanceCost(node, origin);
@@ -191,14 +251,14 @@ public class Pathfinding
         return DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + STRAIGHT_COST * remaining;
     }
 
-    private PathNode GetLowestF()
+    private PathNode GetLowestF(List<PathNode> list)
     {
-        PathNode lowestFScore = openList[0];
-        for (int i = 1; i < openList.Count; i++)
+        PathNode lowestFScore = list[0];
+        for (int i = 1; i < list.Count; i++)
         {
-            if (openList[i].fScore < lowestFScore.fScore)
+            if (list[i].fScore < lowestFScore.fScore)
             {
-                lowestFScore = openList[i];
+                lowestFScore = list[i];
             }
         }
         return lowestFScore;
@@ -278,7 +338,7 @@ public class PathNode
         Vector3 centerPosition = GetWorldPosition() + new Vector3(cellSize, cellSize) * .5f;
         Collider2D[] colliders = Physics2D.OverlapBoxAll(centerPosition, new Vector2(cellSize - offset, cellSize - offset), 0, LayerMask.GetMask(GlobalStrings.kObstacle));
         if (colliders.Length > 0)
-        Debug.Log(colliders[0].gameObject.layer);
+            Debug.Log(colliders[0].gameObject.layer);
 
         if (colliders.Length > 0)
         {
