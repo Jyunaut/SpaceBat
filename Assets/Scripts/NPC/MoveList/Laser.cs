@@ -39,6 +39,7 @@ namespace NPC
             Debug.DrawLine(points[2], points[3], Color.red, 1f); // bottom
             Debug.DrawLine(points[0], points[2], Color.red, 1f); // left
             Debug.DrawLine(points[1], points[3], Color.red, 1f); // right
+            Controller.TriggeredOnMoveComplete();
         }
     }
 }

@@ -32,6 +32,7 @@ namespace NPC
                 }
                 yield return fireRate;
             }
+            Controller.TriggeredOnMoveComplete();
         }
     }
 }

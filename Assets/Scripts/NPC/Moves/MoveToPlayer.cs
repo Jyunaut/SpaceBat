@@ -4,10 +4,11 @@ using UnityEngine;
 
 namespace MoveLibrary
 {
-    [CreateAssetMenu(fileName = "MoveToTarget", menuName = "NPC/MoveToTarget")]
+    [CreateAssetMenu(fileName = "MoveToPlayer", menuName = "NPC/MoveToPlayer")]
     public class MoveToPlayer : Move
     {
-        public Animation animation;
         public float speed;
+        public float stopDistance;
+        public bool followForever;
     }
 }
