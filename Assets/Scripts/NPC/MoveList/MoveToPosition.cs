@@ -7,32 +7,25 @@ namespace NPC
     class MoveToPosition : State
     {
         private MoveLibrary.MoveToPosition moveToPosition;
-        private Coroutine action;
-        private Vector2 initPos;
+        private Vector2 targetPos;
 
         public MoveToPosition(Controller controller) : base(controller)
         {
             moveToPosition = (MoveLibrary.MoveToPosition)Controller.CurrentMove;
-            initPos = Controller.transform.position;
+            Debug.Log(Controller.SpawnPosition);
+            targetPos = Controller.SpawnPosition + moveToPosition.position;
         }
 
-        public override void EnterState()
+        public override void Update()
         {
-            action = Controller.StartCoroutine(Move());
+            Controller.transform.position = Vector2.Lerp(Controller.transform.position, targetPos, Time.deltaTime);
         }
 
-        public override void ExitState()
+        public override void Transitions()
         {
-            Controller.StopCoroutine(action);
-        }
-
-        private IEnumerator Move()
-        {
-            while (((Vector2)Controller.transform.position - (initPos + moveToPosition.position)).sqrMagnitude >= 0.1f)
+            if ((targetPos - (Vector2)Controller.transform.position).sqrMagnitude <= 0.1f)
             {
-                Vector2 direction = (Vector2)Controller.transform.position - (initPos + moveToPosition.position);
-                Controller.Rigidbody2D.MovePosition((Vector2)Controller.transform.position + moveToPosition.speed * direction * Time.deltaTime);
-                yield return null;
+                Controller.TriggeredOnMoveComplete();
             }
         }
     }

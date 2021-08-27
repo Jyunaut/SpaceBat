@@ -33,6 +33,7 @@ namespace NPC
         [field: SerializeField] public int MovesTraversed { get; private set; }
         [field: SerializeField] public int PhasesTraversed { get; private set; }
         [field: SerializeField] public State State { get; private set; }
+        public Vector2 SpawnPosition { get; private set; }
 
         protected override void Awake()
         {
@@ -43,6 +44,7 @@ namespace NPC
 
         private void Start()
         {
+            SpawnPosition = transform.position;
             OnPhaseComplete += (object sender, OnPhaseCompleteEventArgs eventArgs) =>
             {
                 // TODO: Might have to remove this.Since I am not using it
