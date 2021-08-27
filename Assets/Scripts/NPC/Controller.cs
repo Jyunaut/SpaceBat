@@ -7,6 +7,7 @@ using MoveLibrary;
 
 namespace NPC
 {
+    [RequireComponent(typeof(PathfindingHandler))]
     public class Controller : Actor
     {
         public event EventHandler<OnMoveCompleteEventArgs> OnMoveComplete;
@@ -58,6 +59,7 @@ namespace NPC
         
         private void Update()
         {
+            Debug.Log(CurrentPhase[PhasesTraversed].Phase.ToString());
             CheckCondition();
             State?.Update();
             State?.Transitions();
@@ -117,7 +119,7 @@ namespace NPC
         {
             try
             {
-                typeof(State).InvokeMember(move.name, BindingFlags.InvokeMethod, null, State, null);
+                typeof(State).InvokeMember(move.GetType().Name, BindingFlags.InvokeMethod, null, State, null);
             }
             catch (MissingMethodException e)
             {
@@ -139,13 +141,16 @@ namespace NPC
 
         public void CheckCondition()
         {
-            if (Health < (int)(MaxHealth * 0.5f) && !CurrentPhase[0].IsPlayed)
+            if(Phases.Count > 0)
             {
-                TriggeredOnPhaseComplete();
-            }
-            else if (Health < (int)(MaxHealth * 0.25f) && !CurrentPhase[1].IsPlayed)
-            {
-                TriggeredOnPhaseComplete();
+                if (Health < (int)(MaxHealth * 0.5f) && !CurrentPhase[0].IsPlayed)
+                {
+                    TriggeredOnPhaseComplete();
+                }
+                else if (Health < (int)(MaxHealth * 0.25f) && !CurrentPhase[1].IsPlayed)
+                {
+                    TriggeredOnPhaseComplete();
+                }
             }
         }
     }

@@ -26,7 +26,6 @@ namespace NPC
 
         public override void Update()
         {
-            Debug.Log(Controller.IsStaggered);
             pathHandler.HandleMovement();
             if (Controller.IsStaggered)
             {

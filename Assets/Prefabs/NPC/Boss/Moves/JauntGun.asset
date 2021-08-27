@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a85b960183a35246abd6e0cadfdfe9a, type: 3}
+  m_Name: JauntGun
+  m_EditorClassIdentifier: 
+  helperObj: []
+  duration: 0
+  looping: 1
+  background: 0
+  bullet: {fileID: 7416072825471917358, guid: b7fdf3f6932378c4fb3193fb2019db97, type: 3}
+  target: {x: 22, y: 2, z: 0}
+  speed: 12
+  fireRate: 0.2
+  delay: 1
