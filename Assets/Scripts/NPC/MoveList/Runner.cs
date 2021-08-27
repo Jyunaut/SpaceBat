@@ -12,7 +12,7 @@ namespace NPC
 
         public Runner(Controller controller) : base(controller)
         {
-            runner = (MoveLibrary.Runner)Controller.currentMove;
+            runner = (MoveLibrary.Runner)Controller.CurrentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = runner.speed;
             pathHandler.SetTarget(GetTarget());

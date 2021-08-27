@@ -15,7 +15,7 @@ namespace NPC
 
         public MoveToPlayer(Controller controller) : base(controller)
         {
-            moveToPlayer = (MoveLibrary.MoveToPlayer)Controller.currentMove;
+            moveToPlayer = (MoveLibrary.MoveToPlayer)Controller.CurrentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = moveToPlayer.speed;
             player = GameManager.Instance.player;

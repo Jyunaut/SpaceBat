@@ -10,7 +10,7 @@ namespace NPC
         
         public Melee(Controller controller) : base(controller)
         {
-            melee = (MoveLibrary.Melee)Controller.currentMove;
+            melee = (MoveLibrary.Melee)Controller.CurrentMove;
         }
 
         public override void EnterState()

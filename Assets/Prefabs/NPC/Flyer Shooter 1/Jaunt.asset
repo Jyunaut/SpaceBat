@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a09f69398d4c3e40b32e3267768398e, type: 3}
   m_Name: Jaunt
   m_EditorClassIdentifier: 
+  helperObj: []
   duration: 3
   looping: 0
+  background: 0
   target: {x: 10, y: 10, z: 0}
   speed: 2
