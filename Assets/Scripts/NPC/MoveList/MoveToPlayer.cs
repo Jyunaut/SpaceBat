@@ -4,47 +4,47 @@ using UnityEngine;
 
 namespace NPC
 {
-    class MoveToTarget : State
+    class MoveToPlayer : State
     {
         private MoveLibrary.MoveToPlayer moveToPlayer;
         private PathfindingHandler pathHandler;
         private GameObject player;
+
+        private const float checkInterval = 0.25f;
         private float timer;
 
-        public MoveToTarget(Controller controller) : base(controller)
+        public MoveToPlayer(Controller controller) : base(controller)
         {
             moveToPlayer = (MoveLibrary.MoveToPlayer)Controller.CurrentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = moveToPlayer.speed;
             player = GameManager.Instance.player;
-            timer = 0;
-            Debug.Log("Kamikaze");
         }
 
         public override void FixedUpdate()
         {
-            Debug.Log(Controller.IsStaggered);
             if (!Controller.IsStaggered)
             {
                 pathHandler.SetTarget(player.transform.position);
                 pathHandler.HandleMovement();
             }
-            else
-            {
-                pathHandler.StopMoving();
-            }
         }
 
         public override void Transitions()
         {
-            if (pathHandler.isReached)
+            if (!moveToPlayer.followForever)
             {
-                pathHandler.isReached = false;
-                Controller.TriggeredOnMoveComplete();
+                if (timer >= checkInterval)
+                {
+                    if ((player.transform.position - Controller.transform.position).magnitude <= moveToPlayer.stopDistance)
+                    {
+                        pathHandler.StopMoving();
+                        Controller.TriggeredOnMoveComplete();
+                    }
+                    timer = 0f;
+                }
+                timer += Time.deltaTime;
             }
-            else if (moveToPlayer.animation != null && timer >= moveToPlayer.animation.clip.length)
-                Controller.TriggeredOnMoveComplete();
-            timer += Time.deltaTime;
         }
     }
 }

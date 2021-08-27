@@ -7,6 +7,7 @@ namespace NPC
     class Explode : State
     {
         private MoveLibrary.Explode explode;
+        private Coroutine attack;
 
         public Explode(Controller controller) : base(controller)
         {
@@ -17,7 +18,12 @@ namespace NPC
         {
             if (Controller.Animator.runtimeAnimatorController != null)
                 Controller.Animator.Play("Charge");
-            Controller.StartCoroutine(DelayedExplosion());
+            attack = Controller.StartCoroutine(DelayedExplosion());
+        }
+
+        public override void ExitState()
+        {
+            Controller.StopCoroutine(attack);
         }
 
         private IEnumerator DelayedExplosion()

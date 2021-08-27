@@ -119,10 +119,10 @@ namespace Player
                 new Vector2(origin.x - size.x / 2f, origin.y - size.y / 2f),
                 new Vector2(origin.x + size.x / 2f, origin.y - size.y / 2f)
             };
-            Debug.DrawLine(points[0], points[1], Color.red, 1f); // top
-            Debug.DrawLine(points[2], points[3], Color.red, 1f); // bottom
-            Debug.DrawLine(points[0], points[2], Color.red, 1f); // left
-            Debug.DrawLine(points[1], points[3], Color.red, 1f); // right
+            Debug.DrawLine(points[0], points[1], Color.yellow, 0.5f); // top
+            Debug.DrawLine(points[2], points[3], Color.yellow, 0.5f); // bottom
+            Debug.DrawLine(points[0], points[2], Color.yellow, 0.5f); // left
+            Debug.DrawLine(points[1], points[3], Color.yellow, 0.5f); // right
             for (int i = 0; i < hitCount; i++)
             {
                 if (hits[i].TryGetComponent(out Actor target))
@@ -134,6 +134,7 @@ namespace Player
 
         private void HitInteraction(Actor target)
         {
+            target.TakeDamage(attackData.damage);
             Knockback(target, attackData.knockbackMagnitude);
             EffectsManager.Instance.ScreenShake(attackData.screenShakeData);
             EffectsManager.Instance.TimeSlow(attackData.timeSlowData);
@@ -141,8 +142,7 @@ namespace Player
 
         private void Knockback(Actor target, Vector2 magnitude)
         {
-            target.SetStagger(1f);
-            Debug.Log("Hello");
+            target.SetStagger(attackData.staggerDuration);
             target.Rigidbody2D.velocity = new Vector2(magnitude.x * (target.transform.position - Controller.transform.position).normalized.x / 2f, magnitude.y);
         }
     }

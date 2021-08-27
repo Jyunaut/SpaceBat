@@ -8,6 +8,12 @@ public class PathfindingHandler : MonoBehaviour
     public float speed;
     public bool isReached;
     public List<Vector3> vectorPath;
+    private Rigidbody2D rigidbody2d;
+
+    private void Awake()
+    {
+        rigidbody2d = GetComponent<Rigidbody2D>();
+    }
 
     private void Start()
     {
@@ -23,7 +29,7 @@ public class PathfindingHandler : MonoBehaviour
             if (Vector3.Distance(GetPosition(), targetPosition) > 0.1f)
             {
                 Vector3 moveDir = (targetPosition - GetPosition()).normalized;
-                transform.position += moveDir * speed * Time.deltaTime;
+                rigidbody2d.MovePosition(GetPosition() + moveDir * speed * Time.deltaTime);
             }
             else
             {
@@ -50,6 +56,7 @@ public class PathfindingHandler : MonoBehaviour
 
     public void StopMoving()
     {
+        rigidbody2d.velocity = Vector2.zero;
         isReached = true;
         vectorPath = null;
     }

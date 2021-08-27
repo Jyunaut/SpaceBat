@@ -11,6 +11,7 @@ namespace Player
         public int hitFrame;
         public int damage;
         public Vector2 knockbackMagnitude;
+        public float staggerDuration;
         public Vector2 hitBoxOrigin;
         public Vector2 hitBoxSize;
         public EffectsManager.ScreenShakeData screenShakeData;
