@@ -4,29 +4,30 @@ using UnityEngine;
 
 namespace NPC
 {
-    class Laser : State
+    class Melee : State
     {
-        private MoveLibrary.Laser laser;
-
-        public Laser(Controller controller) : base(controller)
+        private MoveLibrary.Melee melee;
+        
+        public Melee(Controller controller) : base(controller)
         {
-            laser = (MoveLibrary.Laser)Controller.currentMove;
+            melee = (MoveLibrary.Melee)Controller.currentMove;
         }
 
         public override void EnterState()
         {
-            Controller.StartCoroutine(ShootAfterDelay());
+            Controller.StartCoroutine(AttackAfterDelay());
         }
 
-        private IEnumerator ShootAfterDelay()
+        private IEnumerator AttackAfterDelay()
         {
-            yield return new WaitForSeconds(laser.delay);
-            Vector2 origin = (Vector2)Controller.transform.position + laser.hitbox.origin;
-            Vector2 size = laser.hitbox.size;
+            yield return new WaitForSeconds(melee.delay);
+
+            Vector2 origin = (Vector2)Controller.transform.position + melee.hitbox.origin;
+            Vector2 size = melee.hitbox.size;
             Collider2D hit = Physics2D.OverlapBox(origin, size, 0f, LayerMask.GetMask(GlobalStrings.kPlayer));
             if (hit && hit.TryGetComponent(out Actor target))
             {
-                target.TakeDamage(laser.damage);
+                target.TakeDamage(melee.damage);
             }
             Vector2[] points =
             {
