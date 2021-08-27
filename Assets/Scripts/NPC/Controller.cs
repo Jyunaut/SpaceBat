@@ -7,6 +7,7 @@ using MoveLibrary;
 
 namespace NPC
 {
+    [RequireComponent(typeof(PathfindingHandler))]
     public class Controller : Actor
     {
         public event EventHandler<OnMoveCompleteEventArgs> OnMoveComplete;
