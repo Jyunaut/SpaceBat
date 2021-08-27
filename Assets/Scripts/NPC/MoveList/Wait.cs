@@ -11,7 +11,7 @@ namespace NPC
 
         public Wait(Controller controller) : base(controller)
         {
-            wait = (MoveLibrary.Wait)Controller.currentMove;
+            wait = (MoveLibrary.Wait)Controller.CurrentMove;
         }
 
         public override void EnterState()

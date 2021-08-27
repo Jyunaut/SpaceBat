@@ -8,15 +8,13 @@ namespace NPC
     {
         private MoveLibrary.Jaunt jaunt;
         private PathfindingHandler pathHandler;
-        private GameObject player;
-        private float timer = 0;
+        // private float timer = 0;
 
         public Jaunt(Controller controller) : base(controller)
         {
-            jaunt = (MoveLibrary.Jaunt)Controller.currentMove;
+            jaunt = (MoveLibrary.Jaunt)Controller.CurrentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = jaunt.speed;
-            player = GameManager.Instance.player;
             pathHandler.isReached = false;
             Debug.Log("Jaunt Triggered");
         }

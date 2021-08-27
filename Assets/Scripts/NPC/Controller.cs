@@ -15,94 +15,117 @@ namespace NPC
         public event EventHandler<OnPhaseCompleteEventArgs> OnPhaseComplete;
         public class OnPhaseCompleteEventArgs : EventArgs { public Phase nextPhase { get; set; } }
 
-        public List<Phase> phases;
+        public class PhaseHandler
+        {
+            public Phase Phase { get; set; }
+            public bool isPlayed { get; set; }
+        }
 
-        public Phase currentPhase;
-        public Move currentMove;
-        public int movesTraversed;
-        public int phasesTraversed;
-        public State state { get; set; }
+        [field: SerializeField] public List<Phase> Phases{ get; private set; }
+        [field: SerializeField] public PhaseHandler CurrentPhase { get; private set; }
+        [field: SerializeField] public Move CurrentMove { get; private set; }
+        [field: SerializeField] public int MovesTraversed { get; private set; }
+        [field: SerializeField] public int PhasesTraversed { get; private set; }
+        [field: SerializeField] public State State { get; private set; }
 
         protected override void Awake()
         {
             base.Awake();
-            state = new State(this);
+            State = new State(this);
+            CurrentPhase = new PhaseHandler();
         }
 
         private void Start()
         {
             OnPhaseComplete += (object sender, OnPhaseCompleteEventArgs eventArgs) =>
             {
-               if(eventArgs.nextPhase != null) TriggerPhase(eventArgs.nextPhase);
+                // TODO: Might have to remove this.Since I am not using it
+                // if(eventArgs.nextPhase != null) TriggerPhase(eventArgs.nextPhase);
             };
-            OnPhaseComplete(this, new OnPhaseCompleteEventArgs { nextPhase = currentPhase = phases[phasesTraversed = 0] });
-
             OnMoveComplete += (object sender, OnMoveCompleteEventArgs eventArgs) =>
             {
                if(eventArgs.nextMove != null) TriggerMove(eventArgs.nextMove);
             };
-            OnMoveComplete(this, new OnMoveCompleteEventArgs { nextMove = currentMove = currentPhase.moves[movesTraversed = 0] });
+            OnPhaseComplete(this, new OnPhaseCompleteEventArgs { nextPhase = CurrentPhase.Phase = Phases[PhasesTraversed = 0] });
+            OnMoveComplete(this, new OnMoveCompleteEventArgs { nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed = 0] });
         }
         
         private void Update()
         {
-            state?.Update();
-            state?.Transitions();
+            State?.Update();
+            State?.Transitions();
         }
 
         private void FixedUpdate()
         {
-            state?.FixedUpdate();
+            State?.FixedUpdate();
         }
 
         public void TriggeredOnMoveComplete()
         {
-            // if(!currentMove.looping) currentPhase.moves.RemoveAt(movesTraversed);
-            if(++movesTraversed < currentPhase.moves.Count)
+            UpdateMoveTraversal();
+            if(MovesTraversed < CurrentPhase.Phase.moves.Count)
             {
-                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = currentMove = currentPhase.moves[movesTraversed]});
+                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed]});
             }
             else
             {
-                TriggeredOnPhaseComplete();
+                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed = 0]});
             }
         }
 
         public void TriggeredOnPhaseComplete()
         {
-            if(++phasesTraversed < phases.Count)
+            CurrentPhase.isPlayed = true;
+            if(++PhasesTraversed < Phases.Count)
             {
-                movesTraversed = 0;
-                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = currentPhase = phases[phasesTraversed]});
+                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = CurrentPhase.Phase = Phases[PhasesTraversed]});
+                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed = 0]});
             }
             else
             {
-                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = currentPhase = phases[phasesTraversed = 0]});
-                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = currentMove = currentPhase.moves[movesTraversed = 0]});
+                Debug.Log("There are no additional phases in the list");
+                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = CurrentPhase.Phase = Phases[PhasesTraversed = 0]});
+                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed = 0]});
             }
         }
 
         public void SetState(State state)
         {
-            this.state?.ExitState();
-            this.state = state;
-            this.state.EnterState();
-        }
-
-        protected void TriggerPhase(Phase phase)
-        {
-            currentPhase = phase;
+            this.State?.ExitState();
+            this.State = state;
+            this.State.EnterState();
         }
 
         protected void TriggerMove(Move move)
         {
             try
             {
-                typeof(State).InvokeMember(move.name, BindingFlags.InvokeMethod, null, state, null);
+                typeof(State).InvokeMember(move.name, BindingFlags.InvokeMethod, null, State, null);
             }
             catch (MissingMethodException e)
             {
                 Debug.Log($"Missing a state Method for: {e.Message}");
+            }
+        }
+
+        private void UpdateMoveTraversal()
+        {
+            if(!CurrentMove.looping)
+            {
+                CurrentPhase.Phase.moves.RemoveAt(MovesTraversed); // TODO: Need to find a way to prevent 1 time use moves from getting deleted in the phase prefab
+            }
+            else
+            {
+                MovesTraversed++;
+            }
+        }
+
+        public void CheckCondition()
+        {
+            if (Health < (int)(MaxHealth * 0.5f) && !CurrentPhase.isPlayed)
+            {
+                TriggeredOnPhaseComplete();
             }
         }
     }
