@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NPC
 {
-    class MoveToTarget : State
+    class MoveToPlayer : State
     {
         private MoveLibrary.MoveToPlayer moveToPlayer;
         private PathfindingHandler pathHandler;
@@ -13,7 +13,7 @@ namespace NPC
         private const float checkInterval = 0.25f;
         private float timer;
 
-        public MoveToTarget(Controller controller) : base(controller)
+        public MoveToPlayer(Controller controller) : base(controller)
         {
             moveToPlayer = (MoveLibrary.MoveToPlayer)Controller.currentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
