@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
             Instance = this;
 
         player = GameObject.FindGameObjectWithTag(GlobalStrings.kPlayer);
-        Debug.Log(player);
     }
 
     private void OnEnable()
