@@ -16,14 +16,12 @@ namespace NPC
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = jauntGun.speed;
             pathHandler.isReached = false;
-            direction = GameManager.Instance.player.transform.position - controller.transform.position;
-            Debug.Log("Jaunt Triggered");
+            pathHandler.SetTarget(jauntGun.target);
         }
 
         public override void EnterState()
         {
-            pathHandler.SetTarget(jauntGun.target);
-            ShootNGun();
+            Controller.StartCoroutine(ShootNGun());
         }
 
         public override void Update()
@@ -49,12 +47,13 @@ namespace NPC
 
         private IEnumerator ShootNGun()
         {
-            WaitForSeconds fireRate = new WaitForSeconds(jauntGun.fireRate);
+            yield return new WaitForSeconds(jauntGun.delay);
 
-            Debug.Log($"PathHandler is {pathHandler}");
-            while(pathHandler.isReached != false)
+            WaitForSeconds fireRate = new WaitForSeconds(jauntGun.fireRate);
+            while(pathHandler.isReached == false)
             {
                 GameObject bullet = Controller.Instantiate(jauntGun.bullet, Controller.transform.position, Quaternion.identity);
+                direction = GameManager.Instance.player.transform.position - Controller.transform.position;
                 bullet.GetComponent<Rigidbody2D>().velocity = jauntGun.speed * direction.normalized;    
                 yield return fireRate;
             }

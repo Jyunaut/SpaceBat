@@ -17,3 +17,4 @@ MonoBehaviour:
   looping: 1
   background: 0
   bullet: {fileID: 7416072825471917358, guid: dd4800134bd0b254d83d9c76281b75e3, type: 3}
+  speed: 5
