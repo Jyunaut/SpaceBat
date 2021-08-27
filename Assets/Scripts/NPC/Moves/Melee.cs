@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace MoveLibrary
 {
-    [CreateAssetMenu(fileName = "Laser", menuName = "NPC/Laser")]
-    public class Laser : Move
+    [CreateAssetMenu(fileName = "Melee", menuName = "NPC/Melee")]
+    public class Melee : Move
     {
-        public GameObject laser;
         public int damage;
         [System.Serializable]
         public struct Hitbox

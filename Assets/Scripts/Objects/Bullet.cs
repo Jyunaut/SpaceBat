@@ -2,26 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class Bullet : MonoBehaviour
 {
-    public GameObject target;
-    public float speed;
-    private Vector3 direction;
+    [SerializeField] private LayerMask _canHit;
+    [field: SerializeField] public int Damage { get; private set; }
 
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        target = GameObject.Find("Player");
-        direction = target.transform.position - transform.position;
-    }
-    private void Update()
-    {
-        if(Vector3.Distance(transform.position, target.transform.position) > 0.1f)
+        if (_canHit == (_canHit | (1 << col.gameObject.layer)))
         {
-            transform.position += direction * speed * Time.deltaTime;
-        }
-        else
-        {
-            Destroy(this.gameObject);
+            if (col.TryGetComponent(out Actor target))
+            {
+                target.TakeDamage(Damage);
+                Destroy(gameObject);
+            }
         }
     }
 }
