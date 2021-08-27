@@ -34,7 +34,7 @@ namespace NPC
                 for (int j = 0; j < shotgun.paths.Length; j++)
                 {
                     GameObject bullet = Controller.Instantiate(shotgun.paths[j].bullet, Controller.transform.position, Quaternion.identity);
-                    bullet.GetComponent<Rigidbody2D>().velocity = shotgun.paths[j].speed * shotgun.paths[j].direction;
+                    bullet.GetComponent<Rigidbody2D>().velocity = shotgun.paths[j].speed * shotgun.paths[j].direction.normalized;
                 }
                 yield return fireRate;
             }
