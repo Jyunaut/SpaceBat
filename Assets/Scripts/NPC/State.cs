@@ -21,9 +21,9 @@ namespace NPC
             Controller.StartCoroutine(StartTimer(duration, startState));
             IEnumerator StartTimer(float duration, bool startState)
             {
-                Debug.Log(Controller.state.ToString() + " Triggered");
+                Debug.Log(Controller.State.ToString() + " Triggered");
                 yield return new WaitForSeconds(duration);
-                Debug.Log(Controller.state.ToString() + " Complete");
+                Debug.Log(Controller.State.ToString() + " Complete");
                 Controller.TriggeredOnMoveComplete();
             }
         }
