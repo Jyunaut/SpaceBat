@@ -190,6 +190,22 @@ PrefabInstance:
       propertyPath: _maxHealth
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 604871437545484286, guid: 0bcb9b2b5c009d84fbb4bd730b765385, type: 3}
+      propertyPath: <Phases>k__BackingField.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 604871437545484286, guid: 0bcb9b2b5c009d84fbb4bd730b765385, type: 3}
+      propertyPath: <Phases>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2d15d66d1b227774a8ba06fc01404502, type: 2}
+    - target: {fileID: 604871437545484286, guid: 0bcb9b2b5c009d84fbb4bd730b765385, type: 3}
+      propertyPath: <Phases>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ba6ae18adde89214e810bac8d2749685, type: 2}
+    - target: {fileID: 604871437545484286, guid: 0bcb9b2b5c009d84fbb4bd730b765385, type: 3}
+      propertyPath: <Phases>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c710dd3b91cb384596b3abd87f672ae, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bcb9b2b5c009d84fbb4bd730b765385, type: 3}
 --- !u!1001 &398346825
@@ -249,7 +265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6444785556271667830, guid: 1f9812be2ba01a84fbbffc7e54d1aec3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f9812be2ba01a84fbbffc7e54d1aec3, type: 3}
@@ -494,11 +510,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 0
   _health: 0
-  <phases>k__BackingField: []
-  <currentPhase>k__BackingField: {fileID: 0}
-  <currentMove>k__BackingField: {fileID: 0}
-  <movesTraversed>k__BackingField: 0
-  <phasesTraversed>k__BackingField: 0
+  <Phases>k__BackingField: []
+  <CurrentMove>k__BackingField: {fileID: 0}
+  <MovesTraversed>k__BackingField: 0
+  <PhasesTraversed>k__BackingField: 0
 --- !u!50 &1377649505
 Rigidbody2D:
   serializedVersion: 4
@@ -568,11 +583,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 233271845023763068, guid: cc3c304772e6de141833225a5d110973, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.85
+      value: 4.6
       objectReference: {fileID: 0}
     - target: {fileID: 233271845023763068, guid: cc3c304772e6de141833225a5d110973, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.71
+      value: 0.84
       objectReference: {fileID: 0}
     - target: {fileID: 233271845023763068, guid: cc3c304772e6de141833225a5d110973, type: 3}
       propertyPath: m_LocalPosition.z
@@ -612,7 +627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 504627307658277923, guid: cc3c304772e6de141833225a5d110973, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc3c304772e6de141833225a5d110973, type: 3}
@@ -723,15 +738,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1670382481698827508, guid: d556543f1cd1d674b99cb04587df9cf3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.34752506
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1670382481698827508, guid: d556543f1cd1d674b99cb04587df9cf3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.24534117
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1670382481698827508, guid: d556543f1cd1d674b99cb04587df9cf3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.1347777
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1670382481698827508, guid: d556543f1cd1d674b99cb04587df9cf3, type: 3}
       propertyPath: m_LocalRotation.w

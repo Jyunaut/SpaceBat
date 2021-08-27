@@ -18,11 +18,17 @@ namespace NPC
         public class PhaseHandler
         {
             public Phase Phase { get; set; }
-            public bool isPlayed { get; set; }
+            public bool IsPlayed { get; set; }
+
+            public PhaseHandler(Phase phase, bool isPlayed = false)
+            {
+                Phase = phase;
+                IsPlayed = isPlayed;
+            }
         }
 
         [field: SerializeField] public List<Phase> Phases{ get; private set; }
-        [field: SerializeField] public PhaseHandler CurrentPhase { get; private set; }
+        [field: SerializeField] public List<PhaseHandler> CurrentPhase { get; private set; }
         [field: SerializeField] public Move CurrentMove { get; private set; }
         [field: SerializeField] public int MovesTraversed { get; private set; }
         [field: SerializeField] public int PhasesTraversed { get; private set; }
@@ -32,7 +38,7 @@ namespace NPC
         {
             base.Awake();
             State = new State(this);
-            CurrentPhase = new PhaseHandler();
+            CurrentPhase = new List<PhaseHandler> { new PhaseHandler(Phases[PhasesTraversed = 0]) };
         }
 
         private void Start()
@@ -46,12 +52,13 @@ namespace NPC
             {
                if(eventArgs.nextMove != null) TriggerMove(eventArgs.nextMove);
             };
-            OnPhaseComplete(this, new OnPhaseCompleteEventArgs { nextPhase = CurrentPhase.Phase = Phases[PhasesTraversed = 0] });
-            OnMoveComplete(this, new OnMoveCompleteEventArgs { nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed = 0] });
+            OnPhaseComplete(this, new OnPhaseCompleteEventArgs { nextPhase = CurrentPhase[PhasesTraversed].Phase });
+            OnMoveComplete(this, new OnMoveCompleteEventArgs { nextMove = CurrentMove = CurrentPhase[PhasesTraversed].Phase.moves[MovesTraversed = 0] });
         }
         
         private void Update()
         {
+            CheckCondition();
             State?.Update();
             State?.Transitions();
         }
@@ -64,29 +71,31 @@ namespace NPC
         public void TriggeredOnMoveComplete()
         {
             UpdateMoveTraversal();
-            if(MovesTraversed < CurrentPhase.Phase.moves.Count)
+            if(MovesTraversed < CurrentPhase[PhasesTraversed].Phase.moves.Count)
             {
-                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed]});
+                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase[PhasesTraversed].Phase.moves[MovesTraversed]});
             }
             else
             {
-                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed = 0]});
+                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase[PhasesTraversed].Phase.moves[MovesTraversed = 0]});
             }
         }
 
         public void TriggeredOnPhaseComplete()
         {
-            CurrentPhase.isPlayed = true;
+            MovesTraversed = 0;
+            CurrentPhase[PhasesTraversed].IsPlayed = true;
             if(++PhasesTraversed < Phases.Count)
             {
-                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = CurrentPhase.Phase = Phases[PhasesTraversed]});
-                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed = 0]});
+                CurrentPhase.Add(new PhaseHandler(Phases[PhasesTraversed]));
+                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = CurrentPhase[PhasesTraversed].Phase});
+                // OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed = 0]});
             }
             else
             {
                 Debug.Log("There are no additional phases in the list");
-                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = CurrentPhase.Phase = Phases[PhasesTraversed = 0]});
-                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase.Phase.moves[MovesTraversed = 0]});
+                OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = CurrentPhase[PhasesTraversed].Phase = Phases[PhasesTraversed = 0]});
+                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase[PhasesTraversed].Phase.moves[MovesTraversed = 0]});
             }
         }
 
@@ -113,7 +122,7 @@ namespace NPC
         {
             if(!CurrentMove.looping)
             {
-                CurrentPhase.Phase.moves.RemoveAt(MovesTraversed); // TODO: Need to find a way to prevent 1 time use moves from getting deleted in the phase prefab
+                CurrentPhase[PhasesTraversed].Phase.moves.RemoveAt(MovesTraversed); // TODO: Need to find a way to prevent 1 time use moves from getting deleted in the phase prefab
             }
             else
             {
@@ -123,7 +132,11 @@ namespace NPC
 
         public void CheckCondition()
         {
-            if (Health < (int)(MaxHealth * 0.5f) && !CurrentPhase.isPlayed)
+            if (Health < (int)(MaxHealth * 0.5f) && !CurrentPhase[0].IsPlayed)
+            {
+                TriggeredOnPhaseComplete();
+            }
+            else if (Health < (int)(MaxHealth * 0.25f) && !CurrentPhase[1].IsPlayed)
             {
                 TriggeredOnPhaseComplete();
             }

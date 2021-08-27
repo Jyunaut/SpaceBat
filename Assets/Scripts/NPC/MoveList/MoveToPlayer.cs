@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace NPC
 {
-    class MoveToTarget : State
+    class MoveToPlayer : State
     {
         private MoveLibrary.MoveToPlayer moveToPlayer;
         private PathfindingHandler pathHandler;
         private GameObject player;
         private float timer;
 
-        public MoveToTarget(Controller controller) : base(controller)
+        public MoveToPlayer(Controller controller) : base(controller)
         {
             moveToPlayer = (MoveLibrary.MoveToPlayer)Controller.CurrentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
