@@ -8,5 +8,6 @@ namespace MoveLibrary
     public class Shoot : Move
     {
         public GameObject bullet;
+        public float speed;
     }
 }
