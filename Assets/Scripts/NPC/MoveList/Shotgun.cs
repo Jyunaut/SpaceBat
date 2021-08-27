@@ -7,6 +7,7 @@ namespace NPC
     class Shotgun : State
     {
         private MoveLibrary.Shotgun shotgun;
+        private Coroutine attack;
 
         public Shotgun(Controller controller) : base(controller)
         {
@@ -15,7 +16,12 @@ namespace NPC
 
         public override void EnterState()
         {
-            Controller.StartCoroutine(ShootAfterDelay());
+            attack = Controller.StartCoroutine(ShootAfterDelay());
+        }
+
+        public override void ExitState()
+        {
+            Controller.StopCoroutine(attack);
         }
 
         private IEnumerator ShootAfterDelay()

@@ -61,6 +61,13 @@ namespace NPC
             State?.FixedUpdate();
         }
 
+        public override void TakeDamage(int amount)
+        {
+            base.TakeDamage(amount);
+            this.SetState(new Hurt(this));
+            TriggeredOnMoveComplete();
+        }
+
         public void TriggeredOnMoveComplete()
         {
             UpdateMoveTraversal();

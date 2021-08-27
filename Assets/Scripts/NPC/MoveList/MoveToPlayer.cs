@@ -21,20 +21,6 @@ namespace NPC
             player = GameManager.Instance.player;
         }
 
-        public override void Update()
-        {
-            if (!moveToPlayer.followForever)
-            {
-                if (timer >= checkInterval)
-                {
-                    if ((player.transform.position - Controller.transform.position).magnitude <= moveToPlayer.stopDistance)
-                        Controller.TriggeredOnMoveComplete();
-                    timer = 0f;
-                }
-                timer += Time.deltaTime;
-            }
-        }
-
         public override void FixedUpdate()
         {
             if (!Controller.IsStaggered)
@@ -42,18 +28,22 @@ namespace NPC
                 pathHandler.SetTarget(player.transform.position);
                 pathHandler.HandleMovement();
             }
-            else
-            {
-                pathHandler.StopMoving();
-            }
         }
 
         public override void Transitions()
         {
-            if (pathHandler.isReached)
+            if (!moveToPlayer.followForever)
             {
-                pathHandler.isReached = false;
-                Controller.TriggeredOnMoveComplete();
+                if (timer >= checkInterval)
+                {
+                    if ((player.transform.position - Controller.transform.position).magnitude <= moveToPlayer.stopDistance)
+                    {
+                        pathHandler.StopMoving();
+                        Controller.TriggeredOnMoveComplete();
+                    }
+                    timer = 0f;
+                }
+                timer += Time.deltaTime;
             }
         }
     }

@@ -7,6 +7,7 @@ namespace NPC
     class Laser : State
     {
         private MoveLibrary.Laser laser;
+        private Coroutine attack;
 
         public Laser(Controller controller) : base(controller)
         {
@@ -15,7 +16,12 @@ namespace NPC
 
         public override void EnterState()
         {
-            Controller.StartCoroutine(ShootAfterDelay());
+            attack = Controller.StartCoroutine(ShootAfterDelay());
+        }
+
+        public override void ExitState()
+        {
+            Controller.StopCoroutine(attack);
         }
 
         private IEnumerator ShootAfterDelay()
@@ -35,10 +41,10 @@ namespace NPC
                 new Vector2(origin.x - size.x / 2f, origin.y - size.y / 2f),
                 new Vector2(origin.x + size.x / 2f, origin.y - size.y / 2f)
             };
-            Debug.DrawLine(points[0], points[1], Color.red, 1f); // top
-            Debug.DrawLine(points[2], points[3], Color.red, 1f); // bottom
-            Debug.DrawLine(points[0], points[2], Color.red, 1f); // left
-            Debug.DrawLine(points[1], points[3], Color.red, 1f); // right
+            Debug.DrawLine(points[0], points[1], Color.red, 0.5f); // top
+            Debug.DrawLine(points[2], points[3], Color.red, 0.5f); // bottom
+            Debug.DrawLine(points[0], points[2], Color.red, 0.5f); // left
+            Debug.DrawLine(points[1], points[3], Color.red, 0.5f); // right
             Controller.TriggeredOnMoveComplete();
         }
     }

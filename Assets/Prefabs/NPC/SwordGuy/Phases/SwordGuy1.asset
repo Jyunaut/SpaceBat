@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8a16d82bef11e4bb84045143207a7d, type: 3}
   m_Name: SwordGuy1
   m_EditorClassIdentifier: 
-  moves: []
-  looping: 0
+  moves:
+  - {fileID: 11400000, guid: daedae5062e911b49838f8c136b7c55d, type: 2}
+  looping: 1

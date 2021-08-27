@@ -38,4 +38,21 @@ namespace NPC
         public void Melee() => Controller.SetState(new Melee(Controller));
         public void Laser() => Controller.SetState(new Laser(Controller));
     }
+    class Hurt : State
+    {
+        private float _hurtTime;
+
+        public Hurt(Controller controller) : base(controller)
+        {
+            _hurtTime = Time.time + 1f;
+        }
+
+        public override void Transitions()
+        {
+            if (Time.time >= _hurtTime)
+            {
+                Controller.TriggeredOnMoveComplete();
+            }
+        }
+    }
 }
