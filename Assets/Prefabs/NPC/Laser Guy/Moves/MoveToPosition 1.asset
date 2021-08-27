@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d56d07c96653b644cb92a58ba59611dd, type: 3}
-  m_Name: Melee
+  m_Script: {fileID: 11500000, guid: 9e9b5d0dbed9045408d6d8ed46b748c3, type: 3}
+  m_Name: MoveToPosition 1
   m_EditorClassIdentifier: 
   helperObj: []
   duration: 0
-  looping: 0
+  looping: 1
   background: 0
-  damage: 10
-  hitbox:
-    origin: {x: 0, y: 0}
-    size: {x: 1, y: 1}
-  delay: 0.5
+  position: {x: -2, y: 2}
+  speed: 2

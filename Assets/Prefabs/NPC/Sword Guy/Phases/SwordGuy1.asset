@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moves:
   - {fileID: 11400000, guid: daedae5062e911b49838f8c136b7c55d, type: 2}
+  - {fileID: 11400000, guid: 4d37a4c5f6408564693fa198a6d2d695, type: 2}
   looping: 1
