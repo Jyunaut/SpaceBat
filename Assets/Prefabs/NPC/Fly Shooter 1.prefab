@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 604871437545484286}
   - component: {fileID: 604871437545484287}
   m_Layer: 7
-  m_Name: Fly Shooter
+  m_Name: Fly Shooter 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

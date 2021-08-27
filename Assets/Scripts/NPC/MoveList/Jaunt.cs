@@ -6,15 +6,17 @@ namespace NPC
 {
     class Jaunt : State
     {
-        private Coroutine coroutine;
         private MoveLibrary.Jaunt jaunt;
         private PathfindingHandler pathHandler;
+        private GameObject player;
+        private float timer = 0;
 
         public Jaunt(Controller controller) : base(controller)
         {
             jaunt = (MoveLibrary.Jaunt)Controller.currentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = jaunt.speed;
+            player = GameManager.Instance.player;
             pathHandler.isReached = false;
             Debug.Log("Jaunt Triggered");
         }
@@ -26,12 +28,24 @@ namespace NPC
 
         public override void Update()
         {
+            Debug.Log(Controller.IsStaggered);
+            pathHandler.HandleMovement();
+            if (Controller.IsStaggered)
+            {
+                pathHandler.StopMoving();
+            }
+        }
+
+        public override void Transitions()
+        {
             if (pathHandler.isReached)
             {
-                Debug.Log(Controller.state.ToString() + " Complete");
                 pathHandler.isReached = false;
                 Controller.TriggeredOnMoveComplete();
             }
+            // else if (moveToPlayer.animation != null && timer >= moveToPlayer.animation.clip.length)
+            //     Controller.TriggeredOnMoveComplete();
+            // timer += Time.deltaTime;
         }
     }
 }

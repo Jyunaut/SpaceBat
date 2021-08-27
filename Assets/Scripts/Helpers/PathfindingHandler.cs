@@ -6,7 +6,7 @@ public class PathfindingHandler : MonoBehaviour
 {
     public int currentPathIndex;
     public float speed;
-    public bool isReached = false;
+    public bool isReached;
     public List<Vector3> vectorPath;
 
     private void Start()
@@ -31,7 +31,6 @@ public class PathfindingHandler : MonoBehaviour
                 if(currentPathIndex >= vectorPath.Count)
                 {
                     StopMoving();
-                    isReached = true;
                 }
             }
         }
@@ -39,6 +38,7 @@ public class PathfindingHandler : MonoBehaviour
 
     public void SetTarget(Vector3 target)
     {
+        isReached = false;
         currentPathIndex = 0;
         vectorPath = Pathfinding.Instance.FindPath(GetPosition(), target);
 
@@ -50,6 +50,7 @@ public class PathfindingHandler : MonoBehaviour
 
     public void StopMoving()
     {
+        isReached = true;
         vectorPath = null;
     }
 

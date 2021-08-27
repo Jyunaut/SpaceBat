@@ -7,6 +7,7 @@ public abstract class Move : ScriptableObject
     public GameObject[] helperObj;
     public float duration;
     public bool looping;
+    public bool background;
     public int uses
     {
         get { return uses; }
