@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d56d07c96653b644cb92a58ba59611dd, type: 3}
-  m_Name: Melee
+  m_Script: {fileID: 11500000, guid: 1e8a16d82bef11e4bb84045143207a7d, type: 3}
+  m_Name: Phase2
   m_EditorClassIdentifier: 
-  helperObj: []
-  duration: 0
+  moves:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   looping: 0
-  background: 0
-  damage: 10
-  hitbox:
-    origin: {x: 0, y: 0}
-    size: {x: 1, y: 1}
-  delay: 0.5

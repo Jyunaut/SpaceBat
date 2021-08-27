@@ -15,6 +15,8 @@ MonoBehaviour:
   animation: {fileID: 7400000, guid: b94ed99de403d374abba48ba5aa98e6a, type: 2}
   hitFrame: 0
   damage: 0
+  knockbackMagnitude: {x: 1, y: 4}
+  staggerDuration: 0.25
   hitBoxOrigin: {x: 0, y: 0.5}
   hitBoxSize: {x: 1, y: 1}
   screenShakeData:

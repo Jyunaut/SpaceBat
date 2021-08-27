@@ -32,6 +32,7 @@ namespace NPC
         public void Shoot() => Controller.SetState(new Shoot(Controller));
         public void Jaunt() => Controller.SetState(new Jaunt(Controller));
         public void MoveToPlayer() => Controller.SetState(new MoveToPlayer(Controller));
+        public void MoveToPosition() => Controller.SetState(new MoveToPosition(Controller));
         public void Runner() => Controller.SetState(new Runner(Controller));
         public void Explode() => Controller.SetState(new Explode(Controller));
         public void Shotgun() => Controller.SetState(new Shotgun(Controller));
@@ -45,7 +46,7 @@ namespace NPC
 
         public Hurt(Controller controller) : base(controller)
         {
-            _hurtTime = Time.time + 1f;
+            _hurtTime = Time.time + 0.5f;
         }
 
         public override void Transitions()

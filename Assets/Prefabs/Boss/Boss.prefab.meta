@@ -1,13 +1,9 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Prefabs/Bullets/Enemy Bullet 2.prefab.meta
 guid: b7fdf3f6932378c4fb3193fb2019db97
 =======
 guid: 593e9cd084acb23408e382cb1e6c70b4
 >>>>>>> 09bce3a261619aefb5d26f402c898f55a634cfca:Assets/Prefabs/Boss/Boss.prefab.meta
-=======
-guid: b7fdf3f6932378c4fb3193fb2019db97
->>>>>>> 09bce3a261619aefb5d26f402c898f55a634cfca
 PrefabImporter:
   externalObjects: {}
   userData: 
