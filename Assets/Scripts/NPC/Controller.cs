@@ -28,8 +28,24 @@ namespace NPC
             }
         }
 
+        public class MoveHandler
+        {
+            public Move Move { get; set; }
+            public bool IsPlayed { get; set; }
+            public int Position { get; set; }
+
+            public MoveHandler(Move move, int position, bool isPlayed = true)
+            {
+                Move = move;
+                IsPlayed = isPlayed;
+                Position = position;
+            }
+        }
+
         [field: SerializeField] public List<Phase> Phases{ get; private set; }
         [field: SerializeField] public List<PhaseHandler> CurrentPhase { get; private set; }
+        [field: SerializeField] public List<MoveHandler> LoopMoveOnce { get; private set; }
+        
         [field: SerializeField] public Move CurrentMove { get; private set; }
         [field: SerializeField] public int MovesTraversed { get; private set; }
         [field: SerializeField] public int PhasesTraversed { get; private set; }
@@ -44,6 +60,7 @@ namespace NPC
             base.Awake();
             State = new State(this);
             CurrentPhase = new List<PhaseHandler> { new PhaseHandler(Phases[PhasesTraversed = 0]) };
+            LoopMoveOnce = new List<MoveHandler> { new MoveHandler(Phases[PhasesTraversed = 0].moves[MovesTraversed = 0], MovesTraversed, false) };
         }
 
         private void Start()
@@ -56,7 +73,10 @@ namespace NPC
             };
             OnMoveComplete += (object sender, OnMoveCompleteEventArgs eventArgs) =>
             {
-               if(eventArgs.nextMove != null) TriggerMove(eventArgs.nextMove);
+                if(eventArgs.nextMove != null)
+                {
+                    TriggerMove(eventArgs.nextMove);
+                }
             };
             OnPhaseComplete(this, new OnPhaseCompleteEventArgs { nextPhase = CurrentPhase[PhasesTraversed].Phase });
             OnMoveComplete(this, new OnMoveCompleteEventArgs { nextMove = CurrentMove = CurrentPhase[PhasesTraversed].Phase.moves[MovesTraversed = 0] });
@@ -64,7 +84,6 @@ namespace NPC
         
         private void Update()
         {
-            Debug.Log(CurrentPhase[PhasesTraversed].Phase.ToString());
             CheckCondition();
             State?.Update();
             State?.Transitions();
@@ -84,10 +103,10 @@ namespace NPC
 
         public void TriggeredOnMoveComplete()
         {
-            UpdateMoveTraversal();
-            if(MovesTraversed < CurrentPhase[PhasesTraversed].Phase.moves.Count)
+            if(++MovesTraversed < CurrentPhase[PhasesTraversed].Phase.moves.Count)
             {
-                OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase[PhasesTraversed].Phase.moves[MovesTraversed]});
+                if(CurrentPhase[PhasesTraversed].Phase.moves[MovesTraversed].looping)
+                    OnMoveComplete?.Invoke(this, new OnMoveCompleteEventArgs{nextMove = CurrentMove = CurrentPhase[PhasesTraversed].Phase.moves[MovesTraversed]});
             }
             else
             {
@@ -129,18 +148,6 @@ namespace NPC
             catch (MissingMethodException e)
             {
                 Debug.Log($"Missing a state Method for: {e.Message}");
-            }
-        }
-
-        private void UpdateMoveTraversal()
-        {
-            if(!CurrentMove.looping)
-            {
-                CurrentPhase[PhasesTraversed].Phase.moves.RemoveAt(MovesTraversed); // TODO: Need to find a way to prevent 1 time use moves from getting deleted in the phase prefab
-            }
-            else
-            {
-                MovesTraversed++;
             }
         }
 
