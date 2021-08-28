@@ -16,5 +16,6 @@ MonoBehaviour:
   duration: 3
   looping: 1
   background: 0
-  animation: {fileID: 0}
   speed: 3
+  stopDistance: 1
+  followForever: 0

@@ -14,6 +14,5 @@ namespace MoveLibrary
             public Vector2 origin;
             public Vector2 size;
         } public Hitbox hitbox;
-        public float delay;
     }
 }

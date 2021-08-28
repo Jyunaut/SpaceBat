@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animation: {fileID: 7400000, guid: c516f2896fe5006429c571984d298bc0, type: 2}
   hitFrame: 0
-  damage: 0
+  damage: 6
+  knockbackMagnitude: {x: 0, y: 0}
+  staggerDuration: 0
   hitBoxOrigin: {x: 0, y: 0.5}
   hitBoxSize: {x: 1, y: 1}
   screenShakeData:
@@ -24,5 +26,5 @@ MonoBehaviour:
     damping: 10
     shakeInOneAxis: 0
   timeSlowData:
-    scale: 0
-    duration: 0
+    scale: 0.9
+    duration: 0.1

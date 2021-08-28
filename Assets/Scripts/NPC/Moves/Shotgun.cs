@@ -16,6 +16,5 @@ namespace MoveLibrary
         } public Path[] paths;
         public int totalShots = 1;
         public float fireRate;
-        public float delay;
     }
 }

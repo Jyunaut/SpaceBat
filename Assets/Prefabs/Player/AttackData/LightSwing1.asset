@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animation: {fileID: 7400000, guid: aa592703d07572a41bb956a085cc3b59, type: 2}
   hitFrame: 1
-  damage: 0
+  damage: 1
   knockbackMagnitude: {x: 1, y: 2}
   staggerDuration: 0.25
   hitBoxOrigin: {x: 0, y: 0.5}

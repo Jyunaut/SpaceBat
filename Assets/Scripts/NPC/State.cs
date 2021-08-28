@@ -40,6 +40,7 @@ namespace NPC
         public void Laser() => Controller.SetState(new Laser(Controller));
         public void JauntGun() => Controller.SetState(new JauntGun(Controller));
         public void RunNGun() => Controller.SetState(new RunNGun(Controller));
+        public void Despawn() => Controller.SetState(new Despawn(Controller));
     }
     class Hurt : State
     {

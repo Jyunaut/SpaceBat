@@ -26,7 +26,7 @@ namespace NPC
 
         private IEnumerator ShootAfterDelay()
         {
-            yield return new WaitForSeconds(shotgun.delay);
+            yield return new WaitForSeconds(shotgun.startDelay);
 
             WaitForSeconds fireRate = new WaitForSeconds(shotgun.fireRate);
             for (int i = 0; i < shotgun.totalShots; i++)
@@ -38,6 +38,7 @@ namespace NPC
                 }
                 yield return fireRate;
             }
+            yield return new WaitForSeconds(shotgun.endDelay);
             Controller.TriggeredOnMoveComplete();
         }
     }

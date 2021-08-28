@@ -19,4 +19,6 @@ public abstract class Move : ScriptableObject
                 Debug.Log($"Cannot assign uses while looping is {looping}");
         }
     }
+    public float startDelay;
+    public float endDelay;
 }

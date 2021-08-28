@@ -8,6 +8,6 @@ namespace MoveLibrary
     public class MoveToPosition : Move
     {
         public Vector2 position;
-        public float speed;
+        [Min(0.1f)] public float travelTime;
     }
 }

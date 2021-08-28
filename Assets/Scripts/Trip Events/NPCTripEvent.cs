@@ -9,7 +9,6 @@ public class NPCTripEvent : TripEvent
     private struct NPC
     {
         [SerializeField] public GameObject npc;
-        [SerializeField] public Vector2 position;
         [SerializeField] public float spawnDelay;
         [SerializeField] public bool isMobile;
     } [SerializeField] private List<NPC> _NPCToSpawn;
@@ -18,7 +17,10 @@ public class NPCTripEvent : TripEvent
     {
         for (int i = 0; i < _NPCToSpawn.Count; i++)
         {
-            StartCoroutine(SpawnAfterDelay(_NPCToSpawn[i].npc, _NPCToSpawn[i].position, _NPCToSpawn[i].spawnDelay, _NPCToSpawn[i].isMobile));
+            if (_NPCToSpawn[i].npc == null)
+                Debug.LogWarning("Missing Enemy Prefab.", this);
+            else
+                StartCoroutine(SpawnAfterDelay(_NPCToSpawn[i].npc, _NPCToSpawn[i].npc.transform.position, _NPCToSpawn[i].spawnDelay, _NPCToSpawn[i].isMobile));
         }
     }
 
@@ -27,7 +29,7 @@ public class NPCTripEvent : TripEvent
         Vector2 initPos = transform.position;
         yield return new WaitForSeconds(delay);
         npc.SetActive(true);
-        npc.transform.position = isMobile ? initPos + position : (Vector2)transform.position + position;
+        // npc.transform.position = isMobile ? initPos + position : (Vector2)transform.position + position;
         if (isMobile) npc.transform.SetParent(null);
     }
 
@@ -36,7 +38,20 @@ public class NPCTripEvent : TripEvent
     {
         for (int i = 0; i < _NPCToSpawn.Count; i++)
         {
-            Gizmos.DrawIcon((Vector2)transform.position + _NPCToSpawn[i].position, _kSpawnIconName, true);
+            if (_NPCToSpawn[i].npc)
+                Gizmos.DrawIcon((Vector2)(transform.position + _NPCToSpawn[i].npc.transform.position), _kSpawnIconName, true);
+        }
+    }
+
+    private void OnValidate()
+    {
+        for (int i = 0; i < _NPCToSpawn.Count; i++)
+        {
+            if (_NPCToSpawn[i].npc && _NPCToSpawn[i].npc.transform.parent != transform)
+            {
+                _NPCToSpawn[i].npc.transform.parent = transform;
+                _NPCToSpawn[i].npc.SetActive(false);
+            }
         }
     }
 }

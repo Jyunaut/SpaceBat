@@ -5,7 +5,7 @@ public struct Inputs
     public delegate void AttackInput();
     public static event AttackInput OnAttackInput;
 
-    private const float _kHoldThreshold = 0.1f;
+    private const float _kHoldThreshold = 0.2f;
     private static float _holdTime;
     
     public static float Horizontal => Player.State.CanMove ? Input.GetAxisRaw("Horizontal") : 0f;

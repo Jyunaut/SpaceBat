@@ -24,8 +24,8 @@ public class CameraFollow : MonoBehaviour
     private void OnDrawGizmos()
     {
         Vector2 cameraOrigin = Camera.main.transform.position;
-        Vector2 cameraExtents = new Vector2(Camera.main.orthographicSize * Screen.width / Screen.height,
-                                            Camera.main.orthographicSize * Screen.width / Screen.height);
+        Vector2 cameraExtents = Camera.main.ScreenToWorldPoint(new Vector2(Camera.main.orthographicSize * Screen.width / Screen.height,
+                                            Camera.main.orthographicSize * Screen.width / Screen.height));
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(cameraOrigin + new Vector2(cameraExtents.x, cameraExtents.y), cameraOrigin + new Vector2(cameraExtents.x, cameraExtents.y + 40f));
         Gizmos.DrawLine(cameraOrigin + new Vector2(-cameraExtents.x, cameraExtents.y), cameraOrigin + new Vector2(-cameraExtents.x, cameraExtents.y + 40f));
