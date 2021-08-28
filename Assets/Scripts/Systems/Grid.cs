@@ -31,16 +31,20 @@ public class Grid<TObject>
         }
 
         // Debug
-        for (int x = 0; x < grid.GetLength(0); x++)
+        bool DebugLines = false;
+        if(DebugLines)
         {
-            for (int y = 0; y < grid.GetLength(1); y++)
+            for (int x = 0; x < grid.GetLength(0); x++)
             {
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.black, 100f);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.black, 100f);
+                for (int y = 0; y < grid.GetLength(1); y++)
+                {
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.black, 100f);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.black, 100f);
+                }
             }
+            Debug.DrawLine(GetWorldPosition(0, _height), GetWorldPosition(_width, _height), Color.black, 100f);
+            Debug.DrawLine(GetWorldPosition(_width, 0), GetWorldPosition(_width, _height), Color.black, 100f);
         }
-        Debug.DrawLine(GetWorldPosition(0, _height), GetWorldPosition(_width, _height), Color.black, 100f);
-        Debug.DrawLine(GetWorldPosition(_width, 0), GetWorldPosition(_width, _height), Color.black, 100f);
     }
 
     public void SetGridObject(int x, int y, TObject obj)
