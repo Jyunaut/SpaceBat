@@ -39,6 +39,7 @@ namespace NPC
         public void Melee() => Controller.SetState(new Melee(Controller));
         public void Laser() => Controller.SetState(new Laser(Controller));
         public void JauntGun() => Controller.SetState(new JauntGun(Controller));
+        public void RunNGun() => Controller.SetState(new RunNGun(Controller));
     }
     class Hurt : State
     {

@@ -10,6 +10,7 @@ namespace MoveLibrary
         public GameObject bullet;
         public Vector3 target;
         public float speed;
+        public float bulletSpeed;
         public float fireRate;
         public float delay;
     }
