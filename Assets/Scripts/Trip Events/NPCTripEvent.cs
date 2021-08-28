@@ -12,6 +12,7 @@ public class NPCTripEvent : TripEvent
         [SerializeField] public float spawnDelay;
         [SerializeField] public bool isMobile;
     } [SerializeField] private List<NPC> _NPCToSpawn;
+    private List<Vector3> _NPCInitialSpawnPos = new List<Vector3>();
 
     protected override void DoEvent()
     {
@@ -33,15 +34,15 @@ public class NPCTripEvent : TripEvent
         if (isMobile) npc.transform.SetParent(null);
     }
 
-    private const string _kSpawnIconName = "redsquare.png";
-    private void OnDrawGizmos()
-    {
-        for (int i = 0; i < _NPCToSpawn.Count; i++)
-        {
-            if (_NPCToSpawn[i].npc)
-                Gizmos.DrawIcon((Vector2)(transform.position + _NPCToSpawn[i].npc.transform.position), _kSpawnIconName, true);
-        }
-    }
+    // private const string _kSpawnIconName = "redsquare.png";
+    // private void OnDrawGizmos()
+    // {
+    //     for (int i = 0; i < _NPCToSpawn.Count; i++)
+    //     {
+    //         if (_NPCToSpawn[i].npc)
+    //             Gizmos.DrawIcon((Vector2)(_NPCInitialSpawnPos[i]), _kSpawnIconName, true);
+    //     }
+    // }
 
     private void OnValidate()
     {
@@ -52,6 +53,7 @@ public class NPCTripEvent : TripEvent
                 _NPCToSpawn[i].npc.transform.parent = transform;
                 _NPCToSpawn[i].npc.SetActive(false);
             }
+            // _NPCInitialSpawnPos.Insert(i, _NPCToSpawn[i].npc.transform.position);
         }
     }
 }

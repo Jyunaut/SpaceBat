@@ -14,5 +14,7 @@ namespace MoveLibrary
             public Vector2 origin;
             public Vector2 size;
         } public Hitbox hitbox;
+        public EffectsManager.ScreenShakeData screenShake;
+        public EffectsManager.TimeSlowData hitStop;
     }
 }

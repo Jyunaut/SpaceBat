@@ -34,6 +34,7 @@ namespace NPC
             if (hit && hit.TryGetComponent(out Actor target))
             {
                 target.TakeDamage(laser.damage);
+                EffectsManager.Instance.TimeSlow(laser.hitStop);
             }
             Vector2[] points =
             {
@@ -51,6 +52,7 @@ namespace NPC
             Debug.DrawLine(points[2], points[3], Color.red, 0.5f); // bottom
             Debug.DrawLine(points[0], points[2], Color.red, 0.5f); // left
             Debug.DrawLine(points[1], points[3], Color.red, 0.5f); // right
+            EffectsManager.Instance.ScreenShake(laser.screenShake);
             yield return new WaitForSeconds(laser.endDelay);
             Controller.TriggeredOnMoveComplete();
         }

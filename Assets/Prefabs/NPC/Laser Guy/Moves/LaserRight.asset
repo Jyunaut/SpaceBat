@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 961142ffc11e87e4d86bac100a378deb, type: 3}
-  m_Name: LaserLeft
+  m_Name: LaserRight
   m_EditorClassIdentifier: 
   helperObj: []
   duration: 0
@@ -21,6 +21,6 @@ MonoBehaviour:
   telegraphEffect: {fileID: 0}
   damage: 0
   hitbox:
-    origin: {x: -4, y: 0}
+    origin: {x: 4, y: 0}
     size: {x: 8, y: 0.5}
     angle: 0

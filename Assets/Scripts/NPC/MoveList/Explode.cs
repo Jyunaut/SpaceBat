@@ -33,12 +33,14 @@ namespace NPC
             if (hit != null && hit.TryGetComponent(out Actor target))
             {
                 target.TakeDamage(explode.damage);
+                EffectsManager.Instance.TimeSlow(explode.hitStop);
             }
             if (explode.explosion)
                 Controller.Instantiate(explode.explosion, Controller.transform.position, Quaternion.identity);
             else
                 Debug.LogWarning("Missing Explosion Prefab.", explode);
             
+            EffectsManager.Instance.ScreenShake(explode.screenShake);
             if (explode.deathOnExplode)
                 Controller.Destroy(Controller.gameObject);
             else
