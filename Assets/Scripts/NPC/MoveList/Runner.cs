@@ -16,7 +16,6 @@ namespace NPC
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = runner.speed;
             runner.direction = runner.direction.normalized;
-            pathHandler.SetTarget(GetTarget());
             Debug.Log("Runner Triggered");
         }
 
@@ -24,6 +23,7 @@ namespace NPC
         {
             if(!Controller.IsStaggered)
             {
+                pathHandler.SetTarget(GetTarget());
                 pathHandler.HandleMovement();
             }
             else
@@ -40,9 +40,6 @@ namespace NPC
                 pathHandler.SetTarget(GetTarget());
                 // Controller.TriggeredOnMoveComplete();
             }
-            // else if (moveToPlayer.animation != null && timer >= moveToPlayer.animation.clip.length)
-            //     Controller.TriggeredOnMoveComplete();
-            // timer += Time.deltaTime;
         }
 
         private Vector3 GetTarget()

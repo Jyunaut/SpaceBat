@@ -8,7 +8,7 @@ namespace MoveLibrary
     public class Phase : ScriptableObject
     {
         public List<Move> moves;
-        public bool looping;
+        public bool looping = true;
     }
 }
 

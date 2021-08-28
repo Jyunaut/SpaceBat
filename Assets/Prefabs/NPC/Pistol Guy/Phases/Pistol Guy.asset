@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8a16d82bef11e4bb84045143207a7d, type: 3}
+  m_Name: Pistol Guy
+  m_EditorClassIdentifier: 
+  moves:
+  - {fileID: 11400000, guid: b1c877cc9e0805c40ba2f5f3d97d5225, type: 2}
+  - {fileID: 11400000, guid: 8365783b07b553d41a94442789991b39, type: 2}
+  looping: 1

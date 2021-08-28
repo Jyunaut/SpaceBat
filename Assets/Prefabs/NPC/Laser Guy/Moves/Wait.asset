@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   helperObj: []
-  duration: 0
+  duration: 1
   looping: 1
-  background: 0
+  startDelay: 0
+  endDelay: 0

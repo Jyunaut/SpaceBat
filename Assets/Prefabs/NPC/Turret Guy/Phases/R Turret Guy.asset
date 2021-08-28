@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e8a16d82bef11e4bb84045143207a7d, type: 3}
-  m_Name: LaserGuy1
+  m_Name: R Turret Guy
   m_EditorClassIdentifier: 
   moves:
-  - {fileID: 11400000, guid: 4780ceef656044449b37354c5e314436, type: 2}
-  - {fileID: 11400000, guid: 525d35b4ad7c9724994a8e6f1040f580, type: 2}
-  - {fileID: 11400000, guid: 28ead5c723b54184a87ecd827444ce6d, type: 2}
-  - {fileID: 11400000, guid: df0990ccccd6b804fae8deb85fa7479c, type: 2}
+  - {fileID: 11400000, guid: 2e9b4cef21de40f409cf102110ef19dc, type: 2}
+  - {fileID: 11400000, guid: 032b3e8bbae401643b3b465420cc1ba2, type: 2}
   looping: 1

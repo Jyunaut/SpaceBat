@@ -38,6 +38,7 @@ namespace NPC
                 }
                 yield return fireRate;
             }
+            EffectsManager.Instance.ScreenShake(shotgun.screenShake);
             yield return new WaitForSeconds(shotgun.endDelay);
             Controller.TriggeredOnMoveComplete();
         }

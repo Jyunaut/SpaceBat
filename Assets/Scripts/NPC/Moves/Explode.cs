@@ -11,5 +11,7 @@ namespace MoveLibrary
         public int damage;
         public float radius;
         public bool deathOnExplode;
+        public EffectsManager.ScreenShakeData screenShake;
+        public EffectsManager.TimeSlowData hitStop;
     }
 }

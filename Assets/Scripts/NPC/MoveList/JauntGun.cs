@@ -9,55 +9,56 @@ namespace NPC
         private MoveLibrary.JauntGun jauntGun;
         private PathfindingHandler pathHandler;
         private Vector3 direction;
+        private Coroutine coroutine;
+        
+        private const float checkInterval = 0.25f;
+        private float timer;
 
         public JauntGun(Controller controller) : base(controller)
         {
             jauntGun = (MoveLibrary.JauntGun)Controller.CurrentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = jauntGun.speed;
-            pathHandler.isReached = false;
-            pathHandler.SetTarget(jauntGun.target);
-        }
-
-        public override void EnterState()
-        {
-            Controller.StartCoroutine(ShootNGun());
+            coroutine = Controller.StartCoroutine(ShootNGun());
         }
 
         public override void FixedUpdate()
         {
-            Debug.Log(pathHandler.isReached);
             if (!Controller.IsStaggered)
             {
+                pathHandler.SetTarget(jauntGun.target);
                 pathHandler.HandleMovement();
             }
         }
 
         public override void Transitions()
         {
-            if (pathHandler.isReached)
+            if (timer >= checkInterval)
             {
-                pathHandler.StopMoving();
-                Controller.TriggeredOnMoveComplete();
+                if ((jauntGun.target - Controller.transform.position).magnitude <= jauntGun.stopDistance)
+                {
+                    pathHandler.StopMoving();
+                    Controller.StopCoroutine(coroutine);
+                    Controller.TriggeredOnMoveComplete();
+                }
+                timer = 0f;
             }
-            // else if (moveToPlayer.animation != null && timer >= moveToPlayer.animation.clip.length)
-            //     Controller.TriggeredOnMoveComplete();
-            // timer += Time.deltaTime;
+            timer += Time.deltaTime;
         }
 
         private IEnumerator ShootNGun()
         {
-            yield return new WaitForSeconds(jauntGun.delay);
+            yield return new WaitForSeconds(jauntGun.startDelay);
 
             WaitForSeconds fireRate = new WaitForSeconds(jauntGun.fireRate);
-            while(!pathHandler.isReached)
+
+            while(true)
             {
                 GameObject bullet = Controller.Instantiate(jauntGun.bullet, Controller.transform.position, Quaternion.identity);
                 direction = GameManager.Instance.player.transform.position - Controller.transform.position;
-                bullet.GetComponent<Rigidbody2D>().velocity = jauntGun.bulletSpeed * direction.normalized;    
+                bullet.GetComponent<Rigidbody2D>().velocity = jauntGun.bulletSpeed * direction.normalized;
                 yield return fireRate;
             }
-            Controller.TriggeredOnMoveComplete();
         }
     }
 }

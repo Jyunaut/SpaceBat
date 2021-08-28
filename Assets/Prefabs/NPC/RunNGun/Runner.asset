@@ -15,7 +15,8 @@ MonoBehaviour:
   helperObj: []
   duration: 0
   looping: 1
-  background: 0
+  startDelay: 0
+  endDelay: 0
   speed: 5
-  range: 3
-  dir: {x: 0.70710677, y: 0.70710677, z: 0}
+  range: 5
+  dir: {x: 0.8778956, y: 0.47885215, z: 0}
