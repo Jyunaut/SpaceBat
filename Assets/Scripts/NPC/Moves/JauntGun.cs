@@ -12,7 +12,6 @@ namespace MoveLibrary
         public float speed;
         public float bulletSpeed;
         public float fireRate;
-        public float delay;
         public float stopDistance;
     }
 }

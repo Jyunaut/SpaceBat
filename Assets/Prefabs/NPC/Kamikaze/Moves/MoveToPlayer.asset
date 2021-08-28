@@ -15,8 +15,8 @@ MonoBehaviour:
   helperObj: []
   duration: 0
   looping: 1
-  startDelay: 0
-  endDelay: 0
-  speed: 0
-  stopDistance: 0
+  startDelay: 0.1
+  endDelay: 0.1
+  speed: 5
+  stopDistance: 0.1
   followForever: 0

@@ -15,12 +15,12 @@ MonoBehaviour:
   helperObj: []
   duration: 0
   looping: 0
-  startDelay: 0
-  endDelay: 0
+  startDelay: 0.1
+  endDelay: 0.1
   bullet: {fileID: 7416072825471917358, guid: dd4800134bd0b254d83d9c76281b75e3, type: 3}
-  target: {x: 23, y: 13, z: 0}
-  speed: 10
-  bulletSpeed: 10
-  fireRate: 0.2
+  target: {x: 5, y: 5, z: 0}
+  speed: 5
+  bulletSpeed: 5
+  fireRate: 1
   delay: 0.1
   stopDistance: 2
