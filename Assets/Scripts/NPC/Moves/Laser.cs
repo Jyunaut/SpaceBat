@@ -17,5 +17,7 @@ namespace MoveLibrary
             public Vector2 size;
             [Range(0f, 360f)] public float angle;
         } public Hitbox hitbox;
+        public EffectsManager.ScreenShakeData screenShake;
+        public EffectsManager.TimeSlowData hitStop;
     }
 }
