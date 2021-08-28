@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Phase
   m_EditorClassIdentifier: 
   moves:
-  - {fileID: 11400000, guid: 15c1ed4192e657a4fa47bdee9ebd6c53, type: 2}
-  looping: 1
+  - {fileID: 11400000, guid: 5a2510279f7ca0442a89ab7cc5864284, type: 2}
+  - {fileID: 11400000, guid: 7f0e47fb46703354cb2cb4748ca012f3, type: 2}
+  - {fileID: 11400000, guid: 14dedafb9d86bb941aa6a7e681bc7c50, type: 2}
+  looping: 0

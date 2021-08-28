@@ -15,13 +15,12 @@ namespace NPC
             jaunt = (MoveLibrary.Jaunt)Controller.CurrentMove;
             pathHandler = Controller.GetComponent<PathfindingHandler>();
             pathHandler.speed = jaunt.speed;
-            pathHandler.isReached = false;
+            pathHandler.SetTarget(jaunt.target);
             Debug.Log("Jaunt Triggered");
         }
 
         public override void EnterState()
         {
-            pathHandler.SetTarget(jaunt.target);
         }
 
         public override void Update()

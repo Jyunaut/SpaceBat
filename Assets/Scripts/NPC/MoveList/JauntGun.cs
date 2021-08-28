@@ -9,6 +9,10 @@ namespace NPC
         private MoveLibrary.JauntGun jauntGun;
         private PathfindingHandler pathHandler;
         private Vector3 direction;
+        private Coroutine coroutine;
+        
+        private const float checkInterval = 0.25f;
+        private float timer;
 
         public JauntGun(Controller controller) : base(controller)
         {
@@ -21,7 +25,7 @@ namespace NPC
 
         public override void EnterState()
         {
-            Controller.StartCoroutine(ShootNGun());
+            coroutine = Controller.StartCoroutine(ShootNGun());
         }
 
         public override void FixedUpdate()
@@ -38,11 +42,10 @@ namespace NPC
             if (pathHandler.isReached)
             {
                 pathHandler.StopMoving();
+                pathHandler.isReached = false;
+                Controller.StopCoroutine(coroutine);
                 Controller.TriggeredOnMoveComplete();
             }
-            // else if (moveToPlayer.animation != null && timer >= moveToPlayer.animation.clip.length)
-            //     Controller.TriggeredOnMoveComplete();
-            // timer += Time.deltaTime;
         }
 
         private IEnumerator ShootNGun()
