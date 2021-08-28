@@ -7,12 +7,12 @@ namespace MoveLibrary
     [CreateAssetMenu(fileName = "RunNGun", menuName = "NPC/RunNGun")]
     public class RunNGun : Move
     {
-        public GameObject bullet;
-        public float speed;
-        public int range;
         public float bulletSpeed;
         public float fireRate;
         public float delay;
+        public GameObject bullet;
+        public float speed;
+        public int range;
         public Vector3 direction
         {
             get

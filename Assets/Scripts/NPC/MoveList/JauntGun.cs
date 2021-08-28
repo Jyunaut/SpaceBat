@@ -24,12 +24,12 @@ namespace NPC
             Controller.StartCoroutine(ShootNGun());
         }
 
-        public override void Update()
+        public override void FixedUpdate()
         {
-            pathHandler.HandleMovement();
-            if (Controller.IsStaggered)
+            Debug.Log(pathHandler.isReached);
+            if (!Controller.IsStaggered)
             {
-                pathHandler.StopMoving();
+                pathHandler.HandleMovement();
             }
         }
 
@@ -37,7 +37,7 @@ namespace NPC
         {
             if (pathHandler.isReached)
             {
-                pathHandler.isReached = false;
+                pathHandler.StopMoving();
                 Controller.TriggeredOnMoveComplete();
             }
             // else if (moveToPlayer.animation != null && timer >= moveToPlayer.animation.clip.length)
@@ -50,7 +50,7 @@ namespace NPC
             yield return new WaitForSeconds(jauntGun.delay);
 
             WaitForSeconds fireRate = new WaitForSeconds(jauntGun.fireRate);
-            while(pathHandler.isReached == false)
+            while(!pathHandler.isReached)
             {
                 GameObject bullet = Controller.Instantiate(jauntGun.bullet, Controller.transform.position, Quaternion.identity);
                 direction = GameManager.Instance.player.transform.position - Controller.transform.position;

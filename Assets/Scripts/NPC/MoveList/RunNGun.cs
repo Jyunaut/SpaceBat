@@ -23,7 +23,7 @@ namespace NPC
 
         public override void EnterState()
         {
-            Controller.StartCoroutine(ShootNGun());
+            // Controller.StartCoroutine(ShootNGun());
         }
 
         public override void Update()

@@ -22,7 +22,6 @@ namespace NPC
 
         public override void Update()
         {
-            Debug.Log(pathHandler.isReached);
             if(!Controller.IsStaggered)
             {
                 pathHandler.HandleMovement();
@@ -35,7 +34,8 @@ namespace NPC
 
         public override void Transitions()
         {
-            if (pathHandler.isReached)
+            // Debug.Log(pathHandler.isReached);
+            if (pathHandler.isReached == true)
             {
                 pathHandler.SetTarget(GetTarget());
                 // Controller.TriggeredOnMoveComplete();
