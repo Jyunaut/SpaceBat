@@ -107,7 +107,6 @@ namespace NPC
         {
             base.TakeDamage(amount);
             this.SetState(new Hurt(this));
-            TriggeredOnMoveComplete();
         }
 
         public void TriggeredOnMoveComplete()
@@ -133,9 +132,8 @@ namespace NPC
         public void TriggeredOnPhaseComplete()
         {
             ScannedPhases[PhasesTraversed].IsPlayed = true;
-
             //Check if next phase is available for transition
-            if(++PhasesTraversed < Phases.Count)
+            if(++PhasesTraversed < Phases.Count && Phases.Count > 1)
             {
                 ScannedPhases.Add(new PhaseHandler(Phases[PhasesTraversed]));
                 OnPhaseComplete?.Invoke(this, new OnPhaseCompleteEventArgs{nextPhase = ScannedPhases[PhasesTraversed].Phase});
