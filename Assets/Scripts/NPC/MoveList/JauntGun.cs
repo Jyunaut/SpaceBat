@@ -54,7 +54,7 @@ namespace NPC
             {
                 GameObject bullet = Controller.Instantiate(jauntGun.bullet, Controller.transform.position, Quaternion.identity);
                 direction = GameManager.Instance.player.transform.position - Controller.transform.position;
-                bullet.GetComponent<Rigidbody2D>().velocity = jauntGun.speed * direction.normalized;    
+                bullet.GetComponent<Rigidbody2D>().velocity = jauntGun.bulletSpeed * direction.normalized;    
                 yield return fireRate;
             }
             Controller.TriggeredOnMoveComplete();
