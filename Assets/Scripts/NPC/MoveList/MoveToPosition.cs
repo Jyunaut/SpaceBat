@@ -7,18 +7,21 @@ namespace NPC
     class MoveToPosition : State
     {
         private MoveLibrary.MoveToPosition moveToPosition;
+        private Vector2 startPos;
         private Vector2 targetPos;
+        private float timer;
 
         public MoveToPosition(Controller controller) : base(controller)
         {
             moveToPosition = (MoveLibrary.MoveToPosition)Controller.CurrentMove;
-            Debug.Log(Controller.SpawnPosition);
+            startPos = Controller.transform.position;
             targetPos = Controller.SpawnPosition + moveToPosition.position;
         }
 
         public override void Update()
         {
-            Controller.transform.position = Vector2.Lerp(Controller.transform.position, targetPos, Time.deltaTime);
+            Controller.transform.position = Vector2.Lerp(startPos, targetPos, timer / moveToPosition.travelTime);
+            timer += Time.deltaTime;
         }
 
         public override void Transitions()

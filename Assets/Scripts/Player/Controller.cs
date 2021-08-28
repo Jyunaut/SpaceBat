@@ -22,6 +22,8 @@ namespace Player
         public CircleCollider2D CircleCollider2d { get; private set; }
         public Dictionary<string, AttackData> AttackDictionary { get; private set; } = new Dictionary<string, AttackData>();
 
+        [field: SerializeField] private GameObject DeathEffect { get; }
+
         protected override void Awake()
         {
             base.Awake();
@@ -32,14 +34,12 @@ namespace Player
 
         private void OnEnable()
         {
-            GlobalEvents.OnPlayerSpawn += EnableControls;
-            GlobalEvents.OnPlayerDead += DisableControls;
+            GlobalEvents.OnPlayerSpawn += Spawn;
         }
 
         private void OnDisable()
         {
-            GlobalEvents.OnPlayerSpawn -= EnableControls;
-            GlobalEvents.OnPlayerDead -= DisableControls;
+            GlobalEvents.OnPlayerSpawn -= Spawn;
         }
 
         private void Start()
@@ -63,6 +63,19 @@ namespace Player
         {
             _topCollision = false;
             _botCollision = false;
+        }
+
+        private void Spawn()
+        {
+            transform.position = new Vector2(0f, -0.5f);
+            EnableControls();
+        }
+
+        protected override void Die()
+        {
+            if (DeathEffect) Instantiate(DeathEffect, transform.position, Quaternion.identity);
+            GlobalEvents.PlayerDies();
+            gameObject.SetActive(false);
         }
 
         private ContactPoint2D[] _obstacleContacts = new ContactPoint2D[1];
@@ -124,6 +137,7 @@ namespace Player
             State.CanMove = true;
             State.CanAttack = true;
         }
+
         private void DisableControls()
         {
             State.CanMove = false;

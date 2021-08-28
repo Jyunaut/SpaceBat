@@ -10,6 +10,6 @@ namespace MoveLibrary
         public GameObject explosion;
         public int damage;
         public float radius;
-        public float delay;
+        public bool deathOnExplode;
     }
 }

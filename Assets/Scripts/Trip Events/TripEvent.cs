@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class TripEvent : MonoBehaviour
 {
-    private enum TripTarget { Player, Camera }
+    private enum TripTarget { Camera, Player }
     [SerializeField] private TripTarget _tripObject;
 
     protected abstract void DoEvent();

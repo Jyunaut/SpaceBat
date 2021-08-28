@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8a16d82bef11e4bb84045143207a7d, type: 3}
-  m_Name: Kamikaze
+  m_Script: {fileID: 11500000, guid: 7306b31cfe969e049a863455abf984a2, type: 3}
+  m_Name: Wait
   m_EditorClassIdentifier: 
-  moves:
-  - {fileID: 11400000, guid: 9f8e02797297c81458d852fe16a18a4e, type: 2}
-  - {fileID: 11400000, guid: 9a2fdf40d7e45fb448cc60fef1a5424e, type: 2}
+  helperObj: []
+  duration: 0
   looping: 1
+  background: 0

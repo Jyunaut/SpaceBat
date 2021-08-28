@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: LaserGuy1
   m_EditorClassIdentifier: 
   moves:
-  - {fileID: 11400000, guid: 28ead5c723b54184a87ecd827444ce6d, type: 2}
   - {fileID: 11400000, guid: 4780ceef656044449b37354c5e314436, type: 2}
+  - {fileID: 11400000, guid: 525d35b4ad7c9724994a8e6f1040f580, type: 2}
+  - {fileID: 11400000, guid: 28ead5c723b54184a87ecd827444ce6d, type: 2}
+  - {fileID: 11400000, guid: df0990ccccd6b804fae8deb85fa7479c, type: 2}
   looping: 1

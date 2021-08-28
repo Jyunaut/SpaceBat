@@ -26,7 +26,7 @@ namespace NPC
 
         private IEnumerator AttackAfterDelay()
         {
-            yield return new WaitForSeconds(melee.delay);
+            yield return new WaitForSeconds(melee.startDelay);
 
             Vector2 origin = (Vector2)Controller.transform.position + melee.hitbox.origin;
             Vector2 size = melee.hitbox.size;
@@ -46,6 +46,7 @@ namespace NPC
             Debug.DrawLine(points[2], points[3], Color.red, 0.5f); // bottom
             Debug.DrawLine(points[0], points[2], Color.red, 0.5f); // left
             Debug.DrawLine(points[1], points[3], Color.red, 0.5f); // right
+            yield return new WaitForSeconds(melee.endDelay);
             Controller.TriggeredOnMoveComplete();
         }
     }

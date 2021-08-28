@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8a16d82bef11e4bb84045143207a7d, type: 3}
-  m_Name: Kamikaze
+  m_Script: {fileID: 11500000, guid: 9e9b5d0dbed9045408d6d8ed46b748c3, type: 3}
+  m_Name: MoveUp
   m_EditorClassIdentifier: 
-  moves:
-  - {fileID: 11400000, guid: 9f8e02797297c81458d852fe16a18a4e, type: 2}
-  - {fileID: 11400000, guid: 9a2fdf40d7e45fb448cc60fef1a5424e, type: 2}
+  helperObj: []
+  duration: 0
   looping: 1
+  background: 0
+  position: {x: 0, y: 3}
+  speed: 1

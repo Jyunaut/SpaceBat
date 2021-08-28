@@ -14,6 +14,11 @@ public class Dummy : Actor
         GlobalEvents.OnReachedEndOfLevel -= Test;
     }
 
+    protected override void Die()
+    {
+        
+    }
+
     private void Test()
     {
         Debug.Log("Woohoo");

@@ -23,7 +23,7 @@ public abstract class Actor : MonoBehaviour
         set
         {
             _health = value > _maxHealth ? _maxHealth : value;
-            if (_health <= 0) GlobalEvents.PlayerDies();
+            if (_health <= 0) Die();
         }
     }
     public bool IsAlive => Health > 0;
@@ -71,4 +71,6 @@ public abstract class Actor : MonoBehaviour
             IsStaggered = false;
         }
     }
+
+    protected abstract void Die();
 }

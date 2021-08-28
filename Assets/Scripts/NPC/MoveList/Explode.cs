@@ -28,14 +28,24 @@ namespace NPC
 
         private IEnumerator DelayedExplosion()
         {
-            yield return new WaitForSeconds(explode.delay);
+            yield return new WaitForSeconds(explode.startDelay);
             Collider2D hit = Physics2D.OverlapCircle(Controller.transform.position, explode.radius, LayerMask.GetMask(GlobalStrings.kPlayer));
             if (hit != null && hit.TryGetComponent(out Actor target))
             {
                 target.TakeDamage(explode.damage);
             }
-            Controller.Instantiate(explode.explosion, Controller.transform.position, Quaternion.identity);
-            Controller.Destroy(Controller.gameObject);
+            if (explode.explosion)
+                Controller.Instantiate(explode.explosion, Controller.transform.position, Quaternion.identity);
+            else
+                Debug.LogWarning("Missing Explosion Prefab.", explode);
+            
+            if (explode.deathOnExplode)
+                Controller.Destroy(Controller.gameObject);
+            else
+            {
+                yield return new WaitForSeconds(explode.endDelay);
+                Controller.TriggeredOnMoveComplete();
+            }
         }
     }
 }

@@ -34,6 +34,9 @@ namespace NPC
         [field: SerializeField] public int MovesTraversed { get; private set; }
         [field: SerializeField] public int PhasesTraversed { get; private set; }
         [field: SerializeField] public State State { get; private set; }
+        [field: SerializeField] private GameObject DeathEffect { get; }
+        [field: SerializeField] private AnimationClip DeathAnimation { get; }
+
         public Vector2 SpawnPosition { get; private set; }
 
         protected override void Awake()
@@ -153,6 +156,27 @@ namespace NPC
                 {
                     TriggeredOnPhaseComplete();
                 }
+            }
+        }
+
+        protected override void Die()
+        {
+            if (DeathAnimation)
+            {
+                StartCoroutine(DeathClip());
+            }
+            else
+            {
+                if (DeathEffect) Instantiate(DeathEffect, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
+
+            IEnumerator DeathClip()
+            {
+                Animator.Play("Death");
+                yield return new WaitForSeconds(DeathAnimation.length);
+                if (DeathEffect) Instantiate(DeathEffect, transform.position, Quaternion.identity);
+                Destroy(gameObject);
             }
         }
     }
